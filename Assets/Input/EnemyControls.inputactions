@@ -1,0 +1,107 @@
+{
+    "name": "EnemyControls",
+    "maps": [
+        {
+            "name": "Basic",
+            "id": "79c69a94-e706-4645-974b-bf4a3ff8715a",
+            "actions": [
+                {
+                    "name": "Enemy Heavy Attack",
+                    "type": "Button",
+                    "id": "f0db001f-59ea-4eb0-80f4-62c73721468a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Enemy Medium Attack",
+                    "type": "Button",
+                    "id": "c059a66f-1cd7-4243-b049-b9381f80fab1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Enemy Light Attack",
+                    "type": "Button",
+                    "id": "964bcde8-2697-4593-bce6-15bcd61586f5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "7cb09fc0-dc20-4e0d-ae5c-b1293e31686b",
+                    "path": "<Keyboard>/p",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Enemy Heavy Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f33d5e22-6998-4753-aafb-6a84daf1f8c7",
+                    "path": "<Gamepad>/dpad/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Enemy Heavy Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "83cdca58-66e2-4bdb-8b7d-783e22cffd91",
+                    "path": "<Keyboard>/o",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Enemy Medium Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3eadf30a-4b90-4d5d-b827-6918d6430b82",
+                    "path": "<Gamepad>/dpad/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Enemy Medium Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0a76a442-f17f-48a3-ac31-276612efedb3",
+                    "path": "<Keyboard>/i",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Enemy Light Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "36afdec2-4f9e-47ad-9aad-449c223cab25",
+                    "path": "<Gamepad>/dpad/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Enemy Light Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
