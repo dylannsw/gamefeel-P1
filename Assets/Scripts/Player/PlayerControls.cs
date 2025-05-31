@@ -104,7 +104,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": ""Jump"",
                     ""type"": ""Button"",
                     ""id"": ""60adb22d-04c1-4bbf-b67b-5b51c058e7ad"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -122,7 +122,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": ""Pause Game"",
                     ""type"": ""Button"",
                     ""id"": ""22a3369d-8c2f-4cb9-89ba-b69215e7bb56"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -131,7 +131,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": ""Light Attack"",
                     ""type"": ""Button"",
                     ""id"": ""498d2119-b9a4-4517-b214-0f03c0ab2099"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": ""Press"",
                     ""initialStateCheck"": false
@@ -140,7 +140,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": ""Medium Attack"",
                     ""type"": ""Button"",
                     ""id"": ""fbc7a7c6-9c9f-4fcf-b90f-5f90f1fd5f31"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -149,7 +149,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": ""Heavy Attack"",
                     ""type"": ""Button"",
                     ""id"": ""5abbffb8-8f6d-4c83-b43a-b480c765a08a"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -167,7 +167,16 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": ""Reload"",
                     ""type"": ""Button"",
                     ""id"": ""96bda133-397b-4c11-b8cd-ae01c497e378"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Descend"",
+                    ""type"": ""Button"",
+                    ""id"": ""03d4ce59-43fb-4117-a9bc-6bfd0b221b3a"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -481,6 +490,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Reload"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""15ae7398-d433-4d36-b8c8-6db7e8ece339"",
+                    ""path"": ""<Keyboard>/leftCtrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Descend"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -504,6 +524,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Basic_HeavyAttack = m_Basic.FindAction("Heavy Attack", throwIfNotFound: true);
         m_Basic_ToggleInventory = m_Basic.FindAction("Toggle Inventory", throwIfNotFound: true);
         m_Basic_Reload = m_Basic.FindAction("Reload", throwIfNotFound: true);
+        m_Basic_Descend = m_Basic.FindAction("Descend", throwIfNotFound: true);
     }
 
     ~@PlayerControls()
@@ -593,6 +614,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Basic_HeavyAttack;
     private readonly InputAction m_Basic_ToggleInventory;
     private readonly InputAction m_Basic_Reload;
+    private readonly InputAction m_Basic_Descend;
     /// <summary>
     /// Provides access to input actions defined in input action map "Basic".
     /// </summary>
@@ -640,6 +662,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Basic/Reload".
         /// </summary>
         public InputAction @Reload => m_Wrapper.m_Basic_Reload;
+        /// <summary>
+        /// Provides access to the underlying input action "Basic/Descend".
+        /// </summary>
+        public InputAction @Descend => m_Wrapper.m_Basic_Descend;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -693,6 +719,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Reload.started += instance.OnReload;
             @Reload.performed += instance.OnReload;
             @Reload.canceled += instance.OnReload;
+            @Descend.started += instance.OnDescend;
+            @Descend.performed += instance.OnDescend;
+            @Descend.canceled += instance.OnDescend;
         }
 
         /// <summary>
@@ -731,6 +760,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Reload.started -= instance.OnReload;
             @Reload.performed -= instance.OnReload;
             @Reload.canceled -= instance.OnReload;
+            @Descend.started -= instance.OnDescend;
+            @Descend.performed -= instance.OnDescend;
+            @Descend.canceled -= instance.OnDescend;
         }
 
         /// <summary>
@@ -847,5 +879,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnReload(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Descend" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnDescend(InputAction.CallbackContext context);
     }
 }

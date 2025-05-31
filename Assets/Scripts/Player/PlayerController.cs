@@ -10,9 +10,11 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
     public float MoveSpeed = 5f;
-    public float Gravity = -9.81f;
+    public float Gravity = 0f; //Changed to 0 because zero gravity evironment
     public float JumpStrength = 1.5f;
-    public bool IsGrounded;
+    //public bool IsGrounded; //Not required anymore no ground check
+    public float acceleration = 20f;
+    public float maxSpeed = 7f;
     public Vector3 Velocity;
 
     [Header("Camera")]
@@ -87,12 +89,14 @@ public class PlayerController : MonoBehaviour
         Controls.HeavyAttack.performed += ctx => CurrentWeapon?.PerformHeavyAttack();
         Controls.Reload.performed += ctx => CurrentWeapon?.PerformReload();
         Controls.PauseGame.performed += ctx => TogglePause();
+
+        Debug.Log("Descend binding: " + Controls.Descend.bindings.Count);
     }
 
     // Update is called once per frame
     void Update()
     {
-        GroundedCheck();
+        //GroundedCheck(); //Removed gorund check, no longer needed
         GetInventoryInput();
     }
 
@@ -188,28 +192,52 @@ public class PlayerController : MonoBehaviour
         //Grab our WASD input as a vector2 and normalize it with our transform
         Vector2 controlAxis = Controls.Movement.ReadValue<Vector2>();
         Vector3 inputDir = new Vector3(controlAxis.x, 0, controlAxis.y);
-        Vector3 inputVelocity = transform.TransformDirection(inputDir.normalized);
+        inputDir = (transform.right * controlAxis.x + transform.forward * controlAxis.y).normalized;
 
         //Add velocity each frame
-        Velocity.y += Gravity * Time.deltaTime;
+        // Velocity.y += Gravity * Time.deltaTime;
 
         //If we're grounded, apply a constant downwards force of baseGravity / 2 for slopes.
-        if (IsGrounded && Velocity.y < 0)
-            Velocity.y = _Gravity / 2;
+        // if (IsGrounded && Velocity.y < 0)
+        //     Velocity.y = _Gravity / 2;
 
         //Apply our movements
-        CC.Move((inputVelocity * MoveSpeed) * Time.deltaTime + //PlayerInput Movement
-                 Velocity * Time.deltaTime); //Additional Velocities (Jump/Gravity)
+        // CC.Move((inputVelocity * MoveSpeed) * Time.deltaTime + //PlayerInput Movement
+        //          Velocity * Time.deltaTime); //Additional Velocities (Jump/Gravity)
+
+        //Vertical movement
+        Vector3 verticalThrust = Vector3.zero;
+        if (Controls.Jump.IsPressed()) verticalThrust += Vector3.up;
+        if (Controls.Descend.IsPressed()) verticalThrust += Vector3.down;
+
+        Vector3 thrustInput = (inputDir + verticalThrust).normalized;
+
+        // Apply acceleration only if input is given
+        if (thrustInput.magnitude > 0.1f)
+        {
+            Velocity += thrustInput * acceleration * Time.deltaTime;
+            Velocity = Vector3.ClampMagnitude(Velocity, maxSpeed); // Prevent infinite speed
+        }
+        else
+        {
+            // Apply damping when not thrusting
+            float damping = 8f;
+            Velocity = Vector3.Lerp(Velocity, Vector3.zero, damping * Time.deltaTime);
+        }
+
+        // Apply movement
+        CC.Move(Velocity * Time.deltaTime);
     }
-    private void GroundedCheck()
-    {
-        IsGrounded = CC.isGrounded;
-    }
+
+    // private void GroundedCheck()
+    // {
+    //     IsGrounded = CC.isGrounded;
+    // }
 
     private void Jump()
     {
-        if (IsGrounded)
-            Velocity.y = JumpStrength;
+        //if (IsGrounded) Remove because no longer on the ground, in space
+        Velocity.y = JumpStrength;
     }
 
     public void TakeDamage(int damage, AttackType strength)

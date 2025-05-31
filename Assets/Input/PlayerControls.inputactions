@@ -18,7 +18,7 @@
                     "name": "Jump",
                     "type": "Button",
                     "id": "60adb22d-04c1-4bbf-b67b-5b51c058e7ad",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -36,7 +36,7 @@
                     "name": "Pause Game",
                     "type": "Button",
                     "id": "22a3369d-8c2f-4cb9-89ba-b69215e7bb56",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -45,7 +45,7 @@
                     "name": "Light Attack",
                     "type": "Button",
                     "id": "498d2119-b9a4-4517-b214-0f03c0ab2099",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "Press",
                     "initialStateCheck": false
@@ -54,7 +54,7 @@
                     "name": "Medium Attack",
                     "type": "Button",
                     "id": "fbc7a7c6-9c9f-4fcf-b90f-5f90f1fd5f31",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -63,7 +63,7 @@
                     "name": "Heavy Attack",
                     "type": "Button",
                     "id": "5abbffb8-8f6d-4c83-b43a-b480c765a08a",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -81,7 +81,16 @@
                     "name": "Reload",
                     "type": "Button",
                     "id": "96bda133-397b-4c11-b8cd-ae01c497e378",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Descend",
+                    "type": "Button",
+                    "id": "03d4ce59-43fb-4117-a9bc-6bfd0b221b3a",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -393,6 +402,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Reload",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "15ae7398-d433-4d36-b8c8-6db7e8ece339",
+                    "path": "<Keyboard>/leftCtrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Descend",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
