@@ -3095,6 +3095,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3566557531825831354, guid: 2a1337d29ed804c508cc1d4311266a7e,
         type: 3}
+      propertyPath: turnSpeed
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 3566557531825831354, guid: 2a1337d29ed804c508cc1d4311266a7e,
+        type: 3}
       propertyPath: EnemyAnimator
       value: 
       objectReference: {fileID: 1133294066}
@@ -3376,7 +3381,7 @@ PrefabInstance:
     - target: {fileID: 6516390966821940542, guid: 2a1337d29ed804c508cc1d4311266a7e,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 4.2
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6858472079670438918, guid: 2a1337d29ed804c508cc1d4311266a7e,
         type: 3}
@@ -4357,6 +4362,11 @@ PrefabInstance:
       propertyPath: UnEquipEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 478637164}
+    - target: {fileID: 5455768045390655106, guid: 8a2804ac60fd4ec4aa849c09fa9cbe08,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5553776952015155310, guid: 8a2804ac60fd4ec4aa849c09fa9cbe08,
         type: 3}
       propertyPath: m_Name

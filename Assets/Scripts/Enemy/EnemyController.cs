@@ -7,6 +7,9 @@ using UnityEngine.UI;
 
 public class EnemyController : MonoBehaviour
 {
+    [Header("Aiming")]
+    public float turnSpeed = 5f;
+
     [Header("Health Parameters")]
     public float MaxHealth = 10;
     public float CurrentHealth = 10;
@@ -45,6 +48,11 @@ public class EnemyController : MonoBehaviour
         UpdateHUD();
         Player = FindObjectOfType<PlayerController>();
         EC = new EnemyControls();
+    }
+
+    private void Update()
+    {
+        TrackPlayer();
     }
 
     private void OnEnable()
@@ -133,4 +141,19 @@ public class EnemyController : MonoBehaviour
         GetComponent<AudioSource>().pitch = 1 + UnityEngine.Random.Range(-PitchVariation, PitchVariation);
         GetComponent<AudioSource>().PlayOneShot(clip);
     }
+
+    public void TrackPlayer()
+    {
+        if (Player == null) return;
+
+        Vector3 direction = Player.transform.position - transform.position;
+        direction.y = 0f; // Ignore vertical rotation
+
+        if (direction.sqrMagnitude > 0.001f)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * turnSpeed);
+        }
+    }
+
 }
