@@ -168,7 +168,7 @@ public class ExampleHitscanRanged : Weapon
     private void UpdateHUD()
     {
         AmmoFill.fillAmount = (float)CurrentAmmo / MaxAmmo;
-        AmmoText.text = $"{CurrentAmmo}\n/\n{MaxAmmo}";
+        AmmoText.text = $"{CurrentAmmo}/{MaxAmmo}";
     }
 
     private void StartTimeDilation(float dilationAmount)

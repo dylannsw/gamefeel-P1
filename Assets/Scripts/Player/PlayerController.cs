@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
@@ -26,6 +27,7 @@ public class PlayerController : MonoBehaviour
     public GameObject HealthBarHUD;
     public Image HealthBarFill;
     public GameObject PauseMenu;
+    public TextMeshProUGUI HealthText;
 
     [Header("Combat")]
     public float MaxHP = 100f;
@@ -56,7 +58,7 @@ public class PlayerController : MonoBehaviour
         {
             WeaponList.Add(weapon.gameObject);
         }
-        EquipWeapon(WeaponList[0]);
+        EquipWeapon(WeaponList[1]);
         Cursor.lockState = CursorLockMode.Locked;
         GamePaused = false;
         Time.timeScale = 1;
@@ -273,6 +275,7 @@ public class PlayerController : MonoBehaviour
     private void UpdateHUD()
     {
         HealthBarFill.fillAmount = (float)CurrentHP / MaxHP;
+        HealthText.text = $"{CurrentHP}/{MaxHP}";
     }
 
     public void PlaySoundWithRandomPitch(AudioClip clip)
