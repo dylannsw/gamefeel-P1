@@ -6,6 +6,7 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using TMPro;
+using System.Runtime.CompilerServices;
 
 public class PlayerController : MonoBehaviour
 {
@@ -28,6 +29,12 @@ public class PlayerController : MonoBehaviour
     public Image HealthBarFill;
     public GameObject PauseMenu;
     public TextMeshProUGUI HealthText;
+    private bool[] segmentBroken;
+
+    [Header("Player Health Bar HUD")]
+    public Animator[] SegmentAnimators;
+    public int TotalSegments = 10;
+    private int _lastSegmentCount;
 
     [Header("Combat")]
     public float MaxHP = 100f;
@@ -58,10 +65,20 @@ public class PlayerController : MonoBehaviour
         {
             WeaponList.Add(weapon.gameObject);
         }
-        EquipWeapon(WeaponList[1]);
+        EquipWeapon(WeaponList[0]);
         Cursor.lockState = CursorLockMode.Locked;
         GamePaused = false;
         Time.timeScale = 1;
+    }
+
+    private void Start()
+    {
+        //Health Bar Damage Animations
+        _lastSegmentCount = TotalSegments;
+        segmentBroken = new bool[TotalSegments];
+        for (int i = 0; i < TotalSegments; i++) segmentBroken[i] = false;
+
+        UpdateHUD();
     }
 
     private void OnEnable()
@@ -100,6 +117,7 @@ public class PlayerController : MonoBehaviour
     {
         //GroundedCheck(); //Removed gorund check, no longer needed
         GetInventoryInput();
+        if (Keyboard.current.hKey.wasPressedThisFrame) Heal(40);
     }
 
     private void EquipWeapon(GameObject weapon)
@@ -245,6 +263,7 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage(int damage, AttackType strength)
     {
         CurrentHP -= damage;
+        CurrentHP = Mathf.Clamp(CurrentHP, 0, MaxHP);
         UpdateHUD();
 
         if(CurrentHP <= 0)
@@ -276,6 +295,33 @@ public class PlayerController : MonoBehaviour
     {
         HealthBarFill.fillAmount = (float)CurrentHP / MaxHP;
         HealthText.text = $"{CurrentHP}/{MaxHP}";
+
+        float hpPercent = CurrentHP / MaxHP;
+
+
+        for (int i = 0; i < TotalSegments; i++)
+        {
+            float threshold = (float)i / TotalSegments;
+
+            // Break segment if HP is below its range
+            if (!segmentBroken[i] && hpPercent <= threshold)
+            {
+                SegmentAnimators[i]?.SetTrigger("Play");
+                segmentBroken[i] = true;
+            }
+            // Reset segment if HP is restored above it
+            else if (segmentBroken[i] && hpPercent >= threshold)
+            {
+                segmentBroken[i] = false;
+            }
+        }
+    }
+
+    public void Heal(int amount)
+    {
+        CurrentHP += amount;
+        CurrentHP = Mathf.Clamp(CurrentHP, 0, MaxHP);
+        UpdateHUD();
     }
 
     public void PlaySoundWithRandomPitch(AudioClip clip)
