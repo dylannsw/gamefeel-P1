@@ -10,6 +10,10 @@ public class EnemyController : MonoBehaviour
     [Header("Aiming")]
     public float turnSpeed = 5f;
 
+    [Header("Positioning")]
+    public float distance = 100f;
+    public float verticalOffset = -15f;
+
     [Header("Health Parameters")]
     public float MaxHealth = 10;
     public float CurrentHealth = 10;
@@ -53,6 +57,11 @@ public class EnemyController : MonoBehaviour
     private void Update()
     {
         TrackPlayer();
+        MaintainDistance();
+        HandleManualAnimationInput();
+
+        if(Input.GetKey(KeyCode.G)) EnemyAnimator.Play("MoveBack");
+
     }
 
     private void OnEnable()
@@ -156,4 +165,54 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    public void MaintainDistance()
+    {
+        if (Player == null) return;
+
+        //Horizontal direction only (XZ)
+        Vector3 horizontalDirection = (transform.position - Player.transform.position);
+        horizontalDirection.y = 0f;
+        horizontalDirection.Normalize();
+
+        //Calculate target position with vertical offset
+        Vector3 targetPosition = Player.transform.position + horizontalDirection * distance + Vector3.up * verticalOffset;
+
+        //Smooth follow
+        transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * 5f);
+    }
+
+    private bool isBackMoving = false;
+    private bool isFrontMoving = false;
+
+    private void HandleManualAnimationInput()
+    {
+        bool backPressed = Input.GetKey(KeyCode.W);
+        bool frontPressed = Input.GetKey(KeyCode.S);
+
+        if (backPressed && !isBackMoving)
+        {
+            EnemyAnimator.ResetTrigger("BackToIdle");
+            EnemyAnimator.SetTrigger("MoveBack");
+            isBackMoving = true;
+        }
+        else if (!backPressed && isBackMoving)
+        {
+            EnemyAnimator.ResetTrigger("MoveBack");
+            EnemyAnimator.SetTrigger("BackToIdle");
+            isBackMoving = false;
+        }
+
+        if (frontPressed & !isFrontMoving)
+        {
+            EnemyAnimator.ResetTrigger("FrontToIdle");
+            EnemyAnimator.SetTrigger("MoveFront");
+            isFrontMoving = true;
+        }
+        else if (!frontPressed && isFrontMoving)
+        {
+            EnemyAnimator.ResetTrigger("MoveFront");
+            EnemyAnimator.SetTrigger("FrontToIdle");
+            isFrontMoving = false;
+        }
+    }
 }
