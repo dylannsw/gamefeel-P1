@@ -75,7 +75,8 @@ MonoBehaviour:
         m_MethodName: PlaySoundWithRandomPitch
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: 4d359857be5f85f4d928ee358a53267b, type: 3}
+          m_ObjectArgument: {fileID: 8300000, guid: 4d359857be5f85f4d928ee358a53267b,
+            type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -99,7 +100,8 @@ MonoBehaviour:
         m_MethodName: set_sprite
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 21300000, guid: ba16794c4f5dbf040bfab3ccb19d0ec5, type: 3}
+          m_ObjectArgument: {fileID: 21300000, guid: ba16794c4f5dbf040bfab3ccb19d0ec5,
+            type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Sprite, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -225,9 +227,12 @@ MonoBehaviour:
   InitialLightAttackDelay: 0
   InitialMediumAttackDelay: 0.833
   InitialHeavyAttackDelay: 1
-  LightHitEffect: {fileID: 5156771909019710770, guid: 33166fefdfc84334c86cc39a5733eac1, type: 3}
-  MediumHitEffect: {fileID: 5156771909019710770, guid: 33166fefdfc84334c86cc39a5733eac1, type: 3}
-  HeavyHitEffect: {fileID: 5156771909019710770, guid: 33166fefdfc84334c86cc39a5733eac1, type: 3}
+  LightHitEffect: {fileID: 5156771909019710770, guid: 33166fefdfc84334c86cc39a5733eac1,
+    type: 3}
+  MediumHitEffect: {fileID: 5156771909019710770, guid: 33166fefdfc84334c86cc39a5733eac1,
+    type: 3}
+  HeavyHitEffect: {fileID: 5156771909019710770, guid: 33166fefdfc84334c86cc39a5733eac1,
+    type: 3}
   MediumTimeDilation: 0.5
   HeavyTimeDilation: 0.3
   TimeDilationDuration: 0.5
@@ -429,9 +434,12 @@ MonoBehaviour:
   LightHitStun: 0.01
   MediumHitStun: 0.05
   HeavyHitStun: 0.15
-  LightHitEffect: {fileID: 5156771909019710770, guid: 33166fefdfc84334c86cc39a5733eac1, type: 3}
-  MediumHitEffect: {fileID: 5156771909019710770, guid: 33166fefdfc84334c86cc39a5733eac1, type: 3}
-  HeavyHitEffect: {fileID: 5156771909019710770, guid: 33166fefdfc84334c86cc39a5733eac1, type: 3}
+  LightHitEffect: {fileID: 5156771909019710770, guid: 33166fefdfc84334c86cc39a5733eac1,
+    type: 3}
+  MediumHitEffect: {fileID: 5156771909019710770, guid: 33166fefdfc84334c86cc39a5733eac1,
+    type: 3}
+  HeavyHitEffect: {fileID: 5156771909019710770, guid: 33166fefdfc84334c86cc39a5733eac1,
+    type: 3}
   StaminaHUD: {fileID: 0}
   StaminaFill: {fileID: 0}
 --- !u!65 &3185419443433629021
@@ -647,7 +655,7 @@ Transform:
   m_GameObject: {fileID: 4648546310754712074}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0, y: -0.27999997, z: 1.05}
+  m_LocalPosition: {x: 0, y: -0.27999997, z: 1.05}
   m_LocalScale: {x: 3.500002, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -694,7 +702,8 @@ MonoBehaviour:
         m_MethodName: PlaySoundWithRandomPitch
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: 4d359857be5f85f4d928ee358a53267b, type: 3}
+          m_ObjectArgument: {fileID: 8300000, guid: 4d359857be5f85f4d928ee358a53267b,
+            type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -718,7 +727,8 @@ MonoBehaviour:
         m_MethodName: set_sprite
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 21300000, guid: ba16794c4f5dbf040bfab3ccb19d0ec5, type: 3}
+          m_ObjectArgument: {fileID: 21300000, guid: ba16794c4f5dbf040bfab3ccb19d0ec5,
+            type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Sprite, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -844,9 +854,12 @@ MonoBehaviour:
   InitialLightAttackDelay: 0
   InitialMediumAttackDelay: 0.833
   InitialHeavyAttackDelay: 1
-  LightHitEffect: {fileID: 5156771909019710770, guid: 33166fefdfc84334c86cc39a5733eac1, type: 3}
-  MediumHitEffect: {fileID: 5156771909019710770, guid: 33166fefdfc84334c86cc39a5733eac1, type: 3}
-  HeavyHitEffect: {fileID: 5156771909019710770, guid: 33166fefdfc84334c86cc39a5733eac1, type: 3}
+  LightHitEffect: {fileID: 5156771909019710770, guid: 33166fefdfc84334c86cc39a5733eac1,
+    type: 3}
+  MediumHitEffect: {fileID: 5156771909019710770, guid: 33166fefdfc84334c86cc39a5733eac1,
+    type: 3}
+  HeavyHitEffect: {fileID: 5156771909019710770, guid: 33166fefdfc84334c86cc39a5733eac1,
+    type: 3}
   MediumTimeDilation: 0.5
   HeavyTimeDilation: 0.3
   TimeDilationDuration: 0.5
@@ -947,7 +960,8 @@ MonoBehaviour:
   MoveSpeed: 5
   Gravity: -9.81
   JumpStrength: 5
-  IsGrounded: 0
+  acceleration: 20
+  maxSpeed: 7
   Velocity: {x: 0, y: 0, z: 0}
   FPSRig: {fileID: 7888818983272557009}
   PlayerCamera: {fileID: 5814340436054927786}
@@ -955,6 +969,9 @@ MonoBehaviour:
   HealthBarHUD: {fileID: 0}
   HealthBarFill: {fileID: 0}
   PauseMenu: {fileID: 0}
+  HealthText: {fileID: 0}
+  SegmentAnimators: []
+  TotalSegments: 10
   MaxHP: 10
   CurrentHP: 10
   TakeLightDamage:
@@ -977,7 +994,8 @@ MonoBehaviour:
         m_MethodName: PlaySoundWithRandomPitch
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: 4d359857be5f85f4d928ee358a53267b, type: 3}
+          m_ObjectArgument: {fileID: 8300000, guid: 4d359857be5f85f4d928ee358a53267b,
+            type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -1004,7 +1022,8 @@ MonoBehaviour:
         m_MethodName: PlaySoundWithRandomPitch
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: c810c1b23acd6d849bead1c59e544800, type: 3}
+          m_ObjectArgument: {fileID: 8300000, guid: c810c1b23acd6d849bead1c59e544800,
+            type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -1031,7 +1050,8 @@ MonoBehaviour:
         m_MethodName: PlaySoundWithRandomPitch
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: c810c1b23acd6d849bead1c59e544800, type: 3}
+          m_ObjectArgument: {fileID: 8300000, guid: c810c1b23acd6d849bead1c59e544800,
+            type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -1058,7 +1078,8 @@ MonoBehaviour:
         m_MethodName: PlayOneShot
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: 0f2db511511b4064698a80a4bb3446fb, type: 3}
+          m_ObjectArgument: {fileID: 8300000, guid: 0f2db511511b4064698a80a4bb3446fb,
+            type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -1070,7 +1091,8 @@ MonoBehaviour:
         m_MethodName: Play
         m_Mode: 5
         m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: 0f2db511511b4064698a80a4bb3446fb, type: 3}
+          m_ObjectArgument: {fileID: 8300000, guid: 0f2db511511b4064698a80a4bb3446fb,
+            type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -1293,7 +1315,8 @@ MonoBehaviour:
         m_MethodName: PlaySoundWithRandomPitch
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: 4d359857be5f85f4d928ee358a53267b, type: 3}
+          m_ObjectArgument: {fileID: 8300000, guid: 4d359857be5f85f4d928ee358a53267b,
+            type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -1317,7 +1340,8 @@ MonoBehaviour:
         m_MethodName: set_sprite
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 21300000, guid: ba16794c4f5dbf040bfab3ccb19d0ec5, type: 3}
+          m_ObjectArgument: {fileID: 21300000, guid: ba16794c4f5dbf040bfab3ccb19d0ec5,
+            type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Sprite, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -1436,9 +1460,12 @@ MonoBehaviour:
   LightAttackDamage: 1
   MediumAttackDamage: 2
   HeavyAttackDamage: 3
-  LightHitEffect: {fileID: 5156771909019710770, guid: 33166fefdfc84334c86cc39a5733eac1, type: 3}
-  MediumHitEffect: {fileID: 5156771909019710770, guid: 33166fefdfc84334c86cc39a5733eac1, type: 3}
-  HeavyHitEffect: {fileID: 5156771909019710770, guid: 33166fefdfc84334c86cc39a5733eac1, type: 3}
+  LightHitEffect: {fileID: 5156771909019710770, guid: 33166fefdfc84334c86cc39a5733eac1,
+    type: 3}
+  MediumHitEffect: {fileID: 5156771909019710770, guid: 33166fefdfc84334c86cc39a5733eac1,
+    type: 3}
+  HeavyHitEffect: {fileID: 5156771909019710770, guid: 33166fefdfc84334c86cc39a5733eac1,
+    type: 3}
   MediumTimeDilation: 0.5
   HeavyTimeDilation: 0.3
   TimeDilationDuration: 0.5
@@ -1614,8 +1641,8 @@ Transform:
   - {fileID: 7122984772149127479}
   - {fileID: 7264041868171731368}
   - {fileID: 2135256935546141539}
-  - {fileID: 3445167351974653838}
   - {fileID: 1651849574644140157}
+  - {fileID: 3445167351974653838}
   - {fileID: 6768377271481346535}
   m_Father: {fileID: 5586056496335948764}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -163,6 +163,7 @@ public class ExampleHitscanRanged : Weapon
         }
 
         UpdateHUD();
+        IsAttacking = false;
     }
 
     private void UpdateHUD()
