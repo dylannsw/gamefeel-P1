@@ -37,6 +37,10 @@ public class ExampleHitscanRanged : Weapon
     public float TimeDilationDuration = 0.5f;
     public float TimeRestoreSpeed = 2f;
     Coroutine timeDilationCoroutine;
+    public ParticleSystem HeavyBeamVFXCharge;
+    public ParticleSystem HeavyBeanVFXHold;
+    public ParticleSystem HeavyBeamVFXFire;
+    public Transform BeamSpawnPoint;
 
     [Header("HUD References")]
     public GameObject AmmoHUD;
@@ -157,6 +161,7 @@ public class ExampleHitscanRanged : Weapon
                         enemy.ReceiveDamage(AttackType.Heavy, HeavyAttackDamage);
                     }
                 }
+
                 StartTimeDilation(HeavyTimeDilation);
                 CurrentAmmo -= HeavyAmmoCost;
                 break;
