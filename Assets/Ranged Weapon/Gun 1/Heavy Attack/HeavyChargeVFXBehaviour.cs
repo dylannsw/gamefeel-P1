@@ -14,6 +14,7 @@ public class HeavyVFXBehaviour : StateMachineBehaviour
             chargeVFX = Object.Instantiate(weapon.HeavyBeamVFXCharge, weapon.BeamSpawnPoint.position, weapon.BeamSpawnPoint.rotation);
             chargeVFX.transform.parent = weapon.BeamSpawnPoint;
             chargeVFX.Play();
+            
             weapon.HeavyBeanVFXHold = chargeVFX;
         }
     }

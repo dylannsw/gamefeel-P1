@@ -791,7 +791,7 @@ Transform:
   m_GameObject: {fileID: 542439978}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.425, y: -0.05, z: 9.54}
+  m_LocalPosition: {x: -1.41, y: -0.41, z: 9.54}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1932,6 +1932,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 542439979}
+  - {fileID: 1217782635}
   - {fileID: 1564128786}
   - {fileID: 1399671740}
   m_Father: {fileID: 1418870136077561715}
@@ -2103,6 +2104,9 @@ MonoBehaviour:
         m_CallState: 2
   CurrentAttack: 0
   Player: {fileID: 4046712202941028483}
+  defaultFOV: 0
+  heavyAttackFOV: 45
+  fovTransitionSpeed: 0.35
   MaxAmmo: 50
   CurrentAmmo: 50
   LightAmmoCost: 1
@@ -2121,8 +2125,8 @@ MonoBehaviour:
   HeavyHitEffect: {fileID: 5156771909019710770, guid: 33166fefdfc84334c86cc39a5733eac1,
     type: 3}
   MediumTimeDilation: 0.5
-  HeavyTimeDilation: 0.3
-  TimeDilationDuration: 0.5
+  HeavyTimeDilation: 0.2
+  TimeDilationDuration: 1.5
   TimeRestoreSpeed: 2
   HeavyBeamVFXCharge: {fileID: 242824001572821024, guid: 9ecb3a919ba4e492ebeb91c0132e55fd,
     type: 3}
@@ -2131,6 +2135,9 @@ MonoBehaviour:
   HeavyBeamVFXFire: {fileID: 6028320028979747377, guid: 15ea0e38efeff4aebba31161405d502d,
     type: 3}
   BeamSpawnPoint: {fileID: 542439979}
+  LightBeamVFXFire: {fileID: 1618758873209074408, guid: a2482cacdb33343ad8b0596fbc141f04,
+    type: 3}
+  LightBeamSpawnPoint: {fileID: 1217782635}
   AmmoHUD: {fileID: 1362773516}
   AmmoFill: {fileID: 891951205}
   AmmoText: {fileID: 1566430298}
@@ -2414,6 +2421,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1176278450}
   m_CullTransparentMesh: 1
+--- !u!1 &1217782634
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1217782635}
+  m_Layer: 0
+  m_Name: LightAttackSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1217782635
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1217782634}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.11, z: 7.09}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 949108821}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1221040631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7804,6 +7842,9 @@ MonoBehaviour:
         m_CallState: 2
   CurrentAttack: 0
   Player: {fileID: 4046712202941028483}
+  defaultFOV: 0
+  heavyAttackFOV: 40
+  fovTransitionSpeed: 1
   MaxAmmo: 50
   CurrentAmmo: 50
   LightAmmoCost: 1
@@ -7829,6 +7870,8 @@ MonoBehaviour:
   HeavyBeanVFXHold: {fileID: 0}
   HeavyBeamVFXFire: {fileID: 0}
   BeamSpawnPoint: {fileID: 0}
+  LightBeamVFXFire: {fileID: 0}
+  LightBeamSpawnPoint: {fileID: 0}
   AmmoHUD: {fileID: 1362773516}
   AmmoFill: {fileID: 891951205}
   AmmoText: {fileID: 1566430298}

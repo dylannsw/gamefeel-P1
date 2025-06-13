@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using static UnityEngine.EventSystems.EventTrigger;
@@ -10,6 +11,12 @@ public class ExampleHitscanRanged : Weapon
 {
     [Header("Player Reference")]
     public PlayerController Player;
+
+    [Header("Camera FOV")]
+    public float defaultFOV;
+    public float heavyAttackFOV = 40f;
+    public float fovTransitionSpeed = 0.5f;
+    public Coroutine fovCoroutine;
 
     [Header("Resource Management")]
     public int MaxAmmo = 50;
@@ -42,6 +49,9 @@ public class ExampleHitscanRanged : Weapon
     public ParticleSystem HeavyBeamVFXFire;
     public Transform BeamSpawnPoint;
 
+    public ParticleSystem LightBeamVFXFire;
+    public Transform LightBeamSpawnPoint;
+
     [Header("HUD References")]
     public GameObject AmmoHUD;
     public Image AmmoFill;
@@ -56,6 +66,9 @@ public class ExampleHitscanRanged : Weapon
         InitializeControls(Player);
 
         Cursor.lockState = CursorLockMode.Locked;
+
+        //Set default FOV based on current camera FOV
+        defaultFOV = Player.PlayerCamera.fieldOfView;
     }
     public override void OnWeaponEquip()
     {
@@ -91,13 +104,18 @@ public class ExampleHitscanRanged : Weapon
         {
             CurrentAttack = AttackType.Heavy;
             HeavyAttackEvent?.Invoke();
-            StartCoroutine(PerformRangedAttack(1f));
+
+            StartCoroutine(PerformRangedAttack(4f));
+
+            if (fovCoroutine != null) StopCoroutine(fovCoroutine);
+
+            fovCoroutine = StartCoroutine(ChangeFOV(heavyAttackFOV));
         }
     }
 
     public override void PerformReload()
     {
-        if(!IsAttacking)
+        if (!IsAttacking)
         {
             ReloadEvent?.Invoke();
             CurrentAmmo = MaxAmmo;
@@ -161,8 +179,7 @@ public class ExampleHitscanRanged : Weapon
                         enemy.ReceiveDamage(AttackType.Heavy, HeavyAttackDamage);
                     }
                 }
-
-                StartTimeDilation(HeavyTimeDilation);
+                //StartTimeDilation(HeavyTimeDilation);
                 CurrentAmmo -= HeavyAmmoCost;
                 break;
         }
@@ -208,5 +225,20 @@ public class ExampleHitscanRanged : Weapon
     public override void OnWeaponUnEquip()
     {
         //Space for custom implementation
+    }
+
+    public IEnumerator ChangeFOV(float targetFOV)
+    {
+        float startFOV = defaultFOV;
+        float t = 0;
+
+        while (MathF.Abs(Player.PlayerCamera.fieldOfView - targetFOV) > 0.1f)
+        {
+            t += Time.deltaTime * fovTransitionSpeed;
+            Player.PlayerCamera.fieldOfView = Mathf.Lerp(startFOV, targetFOV, t);
+            yield return null;
+        }
+
+        Player.PlayerCamera.fieldOfView = targetFOV;
     }
 }
