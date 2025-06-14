@@ -32,6 +32,15 @@ public class MedFireVFXBehaviour : StateMachineBehaviour
                 weapon.MedBeamVFX.SendEvent("OnPlay");
             }
 
+            if (weapon != null)
+            {
+                CameraRecoil recoil = weapon.Player.PlayerCamera.transform.parent.GetComponent<CameraRecoil>();
+                if (recoil != null)
+                {
+                    recoil.FireRecoil(CameraRecoil.RecoilStrength.Medium);
+                }
+            }
+
             // if (weapon != null)
             // {
             //     //Stop/reset FOV after heavy fire animation ends
@@ -42,22 +51,6 @@ public class MedFireVFXBehaviour : StateMachineBehaviour
             // }
             Object.Destroy(beam.gameObject, BeamLifetime);
         }
-    }
-
-    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-        // ExampleHitscanRanged weapon = animator.GetComponentInParent<ExampleHitscanRanged>();
-        // if (weapon != null && weapon.Player != null)
-        // {
-        //     // Stop existing coroutine if it's running
-        //     if (weapon.Player.SensitivityCoroutine != null)
-        //         weapon.StopCoroutine(weapon.Player.SensitivityCoroutine);
-
-        //     // Smoothly restore sensitivity over 0.5 seconds
-        //     weapon.Player.SensitivityCoroutine = weapon.StartCoroutine(
-        //         weapon.Player.SmoothRestoreSensitivity(weapon.Player.DefaultSensitivity, 1.5f)
-        //     );
-        // }
     }
 }
 

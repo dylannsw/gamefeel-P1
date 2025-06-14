@@ -34,12 +34,19 @@ public class HeavyFireVFXBehaviour : StateMachineBehaviour
 
             if (weapon != null)
             {
-                // Stop/reset FOV after heavy fire animation ends
+                CameraRecoil recoil = weapon.Player.PlayerCamera.transform.parent.GetComponent<CameraRecoil>();
+                if (recoil != null)
+                {
+                    recoil.FireRecoil(CameraRecoil.RecoilStrength.Heavy);
+                }
+
+                //Stop/reset FOV after heavy fire animation ends
                 if (weapon.fovCoroutine != null)
                     weapon.StopCoroutine(weapon.fovCoroutine);
 
                 weapon.fovCoroutine = weapon.StartCoroutine(weapon.ChangeFOV(weapon.defaultFOV));
             }
+
             Object.Destroy(beam.gameObject, BeamLifetime);
         }
     }

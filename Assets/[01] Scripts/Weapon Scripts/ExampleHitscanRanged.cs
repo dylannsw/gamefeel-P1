@@ -14,6 +14,7 @@ public class ExampleHitscanRanged : Weapon
     public PlayerController Player;
     public float attackSensitivity = 1f;
     public CameraShake cameraShake;
+    public CameraRecoil cameraRecoil;
 
     [Header("Camera FOV")]
     public float defaultFOV;
@@ -88,6 +89,9 @@ public class ExampleHitscanRanged : Weapon
 
         //Camera Shake Reference
         cameraShake = Player.PlayerCamera.transform.parent.GetComponent<CameraShake>();
+
+        //Camera Recoil Reference
+        cameraRecoil = Player.PlayerCamera.transform.parent.GetComponent<CameraRecoil>();
 
 
     }
@@ -172,6 +176,9 @@ public class ExampleHitscanRanged : Weapon
                         enemy.ReceiveDamage(AttackType.Light, LightAttackDamage);
                     }
                 }
+
+                if (cameraRecoil != null) cameraRecoil.FireRecoil(CameraRecoil.RecoilStrength.Light);
+
                 CurrentAmmo -= LightAmmoCost;
                 break;
 
@@ -188,7 +195,10 @@ public class ExampleHitscanRanged : Weapon
                         enemy.ReceiveDamage(AttackType.Medium, MediumAttackDamage);
                     }
                 }
+
+                //if (cameraRecoil != null) cameraRecoil.FireRecoil(CameraRecoil.RecoilStrength.Medium);
                 //StartTimeDilation(MediumTimeDilation);
+
                 CurrentAmmo -= MediumAmmoCost;
                 break;
 
@@ -205,7 +215,10 @@ public class ExampleHitscanRanged : Weapon
                         enemy.ReceiveDamage(AttackType.Heavy, HeavyAttackDamage);
                     }
                 }
+
+                //if (cameraRecoil != null) cameraRecoil.FireRecoil(CameraRecoil.RecoilStrength.Heavy);
                 //StartTimeDilation(HeavyTimeDilation);
+                
                 CurrentAmmo -= HeavyAmmoCost;
                 break;
         }

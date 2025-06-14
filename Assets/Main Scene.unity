@@ -2737,6 +2737,7 @@ MonoBehaviour:
   Player: {fileID: 4046712202941028483}
   attackSensitivity: 1
   cameraShake: {fileID: 0}
+  cameraRecoil: {fileID: 0}
   defaultFOV: 0
   heavyAttackFOV: 45
   fovTransitionSpeed: 0.6
@@ -3166,6 +3167,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1382501392}
   - component: {fileID: 1382501393}
+  - component: {fileID: 1382501394}
   m_Layer: 0
   m_Name: Camera Holder
   m_TagString: Untagged
@@ -3201,6 +3203,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b0786f3e2d5fdc448fc28cae2ed6fac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1382501394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1382501391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86e4f9c551dcec4448c721a5a7401c58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lightRecoil:
+    rotationRecoil: 1
+    positionRecoil: 0.2
+    recoilSpeed: 25
+    returnSpeed: 25
+  mediumRecoil:
+    rotationRecoil: 10
+    positionRecoil: 1.5
+    recoilSpeed: 20
+    returnSpeed: 20
+  heavyRecoil:
+    rotationRecoil: 20
+    positionRecoil: 2
+    recoilSpeed: 30
+    returnSpeed: 30
 --- !u!1 &1401667486
 GameObject:
   m_ObjectHideFlags: 0
@@ -8505,6 +8534,7 @@ MonoBehaviour:
   Player: {fileID: 4046712202941028483}
   attackSensitivity: 1
   cameraShake: {fileID: 0}
+  cameraRecoil: {fileID: 0}
   defaultFOV: 0
   heavyAttackFOV: 40
   fovTransitionSpeed: 1

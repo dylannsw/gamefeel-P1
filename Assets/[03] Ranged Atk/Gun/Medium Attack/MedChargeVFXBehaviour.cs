@@ -19,6 +19,7 @@ public class MedChargeVFXBehaviour : StateMachineBehaviour
             chargeVFX.Play();
 
             //weapon.HeavyBeanVFXHold = chargeVFX;
+            Object.Destroy(chargeVFX.gameObject, 5);
         }
     }
 }
