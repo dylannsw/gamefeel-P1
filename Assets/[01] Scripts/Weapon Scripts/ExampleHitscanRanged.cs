@@ -55,6 +55,13 @@ public class ExampleHitscanRanged : Weapon
     public VisualEffect HeavyBeamVFX;
     public Transform HeavyBeamSpawnPoint;
 
+    [Header("Medium Attack")]
+    public ParticleSystem MedBeamVFXCharge;
+    public ParticleSystem MedBeamVFXFire;
+    public VisualEffect MedBeamVFX;
+    public Transform MedBeamSpawnPoint;
+    public Transform MedChargeSpawnPoint;
+
     [Header("Light Attack")]
     public ParticleSystem LightBeamVFXFire;
     public VisualEffect LightMuzzleVFX;
@@ -109,7 +116,7 @@ public class ExampleHitscanRanged : Weapon
             IsAttacking = true;
             CurrentAttack = AttackType.Medium;
             MediumAttackEvent?.Invoke();
-            StartCoroutine(PerformRangedAttack(1.5f));
+            StartCoroutine(PerformRangedAttack(2.5f));
         }
     }
 
@@ -181,7 +188,7 @@ public class ExampleHitscanRanged : Weapon
                         enemy.ReceiveDamage(AttackType.Medium, MediumAttackDamage);
                     }
                 }
-                StartTimeDilation(MediumTimeDilation);
+                //StartTimeDilation(MediumTimeDilation);
                 CurrentAmmo -= MediumAmmoCost;
                 break;
 
