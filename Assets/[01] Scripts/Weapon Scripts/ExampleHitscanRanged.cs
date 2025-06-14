@@ -30,9 +30,9 @@ public class ExampleHitscanRanged : Weapon
     public int HeavyAmmoCost = 10;
 
     [Header("Attack Ranges")]
-    public float LightAttackRange = 5f;
-    public float MediumAttackRange = 8f;
-    public float HeavyAttackRange = 10f;
+    public float LightAttackRange = 50f;
+    public float MediumAttackRange = 50f;
+    public float HeavyAttackRange = 50f;
 
     [Header("Attack Damages")]
     public float LightAttackDamage = 5f;
@@ -55,6 +55,8 @@ public class ExampleHitscanRanged : Weapon
     public ParticleSystem HeavyBeamVFXFire;
     public VisualEffect HeavyBeamVFX;
     public Transform HeavyBeamSpawnPoint;
+    private Coroutine heavyBeamCoroutine;
+    public float heavyBeamTickRate = 0.3f;
 
     [Header("Medium Attack")]
     public ParticleSystem MedBeamVFXCharge;
@@ -120,7 +122,7 @@ public class ExampleHitscanRanged : Weapon
             IsAttacking = true;
             CurrentAttack = AttackType.Medium;
             MediumAttackEvent?.Invoke();
-            StartCoroutine(PerformRangedAttack(2.5f));
+            StartCoroutine(PerformRangedAttack(2f));
         }
     }
 
@@ -164,6 +166,9 @@ public class ExampleHitscanRanged : Weapon
         switch (CurrentAttack)
         {
             case AttackType.Light:
+
+                Debug.DrawRay(Player.PlayerCamera.transform.position, Player.PlayerCamera.transform.forward * LightAttackRange, Color.red, 2f);
+
                 if (Physics.Raycast(Player.PlayerCamera.transform.position,
                                    Player.PlayerCamera.transform.forward,
                                    out RaycastHit lightHit,
@@ -183,43 +188,43 @@ public class ExampleHitscanRanged : Weapon
                 break;
 
             case AttackType.Medium:
-                if (Physics.Raycast(Player.PlayerCamera.transform.position,
-                                   Player.PlayerCamera.transform.forward,
-                                   out RaycastHit mediumHit,
-                                   MediumAttackRange))
-                {
-                    Instantiate(MediumHitEffect, mediumHit.point, Quaternion.identity);
-                    if (mediumHit.collider.gameObject.GetComponent<EnemyController>())
-                    {
-                        var enemy = mediumHit.collider.gameObject.GetComponent<EnemyController>();
-                        enemy.ReceiveDamage(AttackType.Medium, MediumAttackDamage);
-                    }
-                }
+                // if (Physics.Raycast(Player.PlayerCamera.transform.position,
+                //                    Player.PlayerCamera.transform.forward,
+                //                    out RaycastHit mediumHit,
+                //                    MediumAttackRange))
+                // {
+                //     Instantiate(MediumHitEffect, mediumHit.point, Quaternion.identity);
+                //     if (mediumHit.collider.gameObject.GetComponent<EnemyController>())
+                //     {
+                //         var enemy = mediumHit.collider.gameObject.GetComponent<EnemyController>();
+                //         enemy.ReceiveDamage(AttackType.Medium, MediumAttackDamage);
+                //     }
+                // }
 
                 //if (cameraRecoil != null) cameraRecoil.FireRecoil(CameraRecoil.RecoilStrength.Medium);
                 //StartTimeDilation(MediumTimeDilation);
+                //CurrentAmmo -= MediumAmmoCost;
 
-                CurrentAmmo -= MediumAmmoCost;
                 break;
 
             case AttackType.Heavy:
-                if (Physics.Raycast(Player.PlayerCamera.transform.position,
-                                   Player.PlayerCamera.transform.forward,
-                                   out RaycastHit heavyHit,
-                                   HeavyAttackRange))
-                {
-                    Instantiate(HeavyHitEffect, heavyHit.point, Quaternion.identity);
-                    if (heavyHit.collider.gameObject.GetComponent<EnemyController>())
-                    {
-                        var enemy = heavyHit.collider.gameObject.GetComponent<EnemyController>();
-                        enemy.ReceiveDamage(AttackType.Heavy, HeavyAttackDamage);
-                    }
-                }
+                // if (Physics.Raycast(Player.PlayerCamera.transform.position,
+                //                    Player.PlayerCamera.transform.forward,
+                //                    out RaycastHit heavyHit,
+                //                    HeavyAttackRange))
+                // {
+                //     Instantiate(HeavyHitEffect, heavyHit.point, Quaternion.identity);
+                //     if (heavyHit.collider.gameObject.GetComponent<EnemyController>())
+                //     {
+                //         var enemy = heavyHit.collider.gameObject.GetComponent<EnemyController>();
+                //         enemy.ReceiveDamage(AttackType.Heavy, HeavyAttackDamage);
+                //     }
+                // }
 
                 //if (cameraRecoil != null) cameraRecoil.FireRecoil(CameraRecoil.RecoilStrength.Heavy);
                 //StartTimeDilation(HeavyTimeDilation);
-                
-                CurrentAmmo -= HeavyAmmoCost;
+                //CurrentAmmo -= HeavyAmmoCost;
+
                 break;
         }
 
@@ -227,7 +232,7 @@ public class ExampleHitscanRanged : Weapon
         ResetAttackState();
     }
 
-    private void UpdateHUD()
+    public void UpdateHUD()
     {
         AmmoFill.fillAmount = (float)CurrentAmmo / MaxAmmo;
         AmmoText.text = $"{CurrentAmmo}/{MaxAmmo}";
@@ -292,4 +297,97 @@ public class ExampleHitscanRanged : Weapon
         yield return new WaitForSeconds(3.4f); // Adjust for reload animation time
         ResetAttackState();
     }
+
+    public void FireRaycast()
+    {
+        RaycastHit hit;
+        GameObject effect = null;
+        float range = 0;
+        float damage = 0;
+
+        switch (CurrentAttack)
+        {
+            case AttackType.Medium:
+                range = MediumAttackRange;
+                damage = MediumAttackDamage;
+                effect = MediumHitEffect;
+                break;
+            case AttackType.Heavy:
+                range = HeavyAttackRange;
+                damage = HeavyAttackDamage;
+                effect = HeavyHitEffect;
+                break;
+            default:
+                return;
+        }
+
+        Debug.DrawRay(Player.PlayerCamera.transform.position,
+                      Player.PlayerCamera.transform.forward * range, Color.yellow, 2f);
+
+        if (Physics.Raycast(Player.PlayerCamera.transform.position,
+                            Player.PlayerCamera.transform.forward,
+                            out hit, range))
+        {
+            if (effect != null)
+                Instantiate(effect, hit.point, Quaternion.identity);
+
+            var enemy = hit.collider.GetComponent<EnemyController>();
+            if (enemy != null)
+                enemy.ReceiveDamage(CurrentAttack, damage);
+        }
+
+        CurrentAmmo -= GetAmmoCost(CurrentAttack);
+        UpdateHUD();
+    }
+
+    private int GetAmmoCost(AttackType attack)
+    {
+        return attack switch
+        {
+            AttackType.Light => LightAmmoCost,
+            AttackType.Medium => MediumAmmoCost,
+            AttackType.Heavy => HeavyAmmoCost,
+            _ => 0
+        };
+    }
+
+    //Heavy Attack Tick Damage
+    public void StartHeavyBeamTick()
+    {
+        if (heavyBeamCoroutine != null) return;
+        heavyBeamCoroutine = StartCoroutine(HeavyBeamTick());
+    }
+
+    public void StopHeavyBeamTick()
+    {
+        if (heavyBeamCoroutine != null)
+        {
+            StopCoroutine(heavyBeamCoroutine);
+            heavyBeamCoroutine = null;
+        }
+    }
+
+    private IEnumerator HeavyBeamTick()
+    {
+        while (true)
+        {
+            if (Physics.Raycast(Player.PlayerCamera.transform.position,
+                                Player.PlayerCamera.transform.forward,
+                                out RaycastHit hit, HeavyAttackRange))
+            {
+                var enemy = hit.collider.GetComponent<EnemyController>();
+                if (enemy != null)
+                {
+                    enemy.ReceiveDamage(AttackType.Heavy, HeavyAttackDamage);
+                }
+
+                if (HeavyHitEffect != null)
+                    Instantiate(HeavyHitEffect, hit.point, Quaternion.identity);
+            }
+
+            yield return new WaitForSeconds(heavyBeamTickRate);
+        }
+    }
+
+
 }

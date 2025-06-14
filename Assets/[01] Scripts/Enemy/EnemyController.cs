@@ -39,6 +39,11 @@ public class EnemyController : MonoBehaviour
     public UnityEvent OnDamagedHeavy;
     public UnityEvent OnDeath;
 
+    [Header("Enemy Health Bar Segments")]
+    public Animator[] SegmentsAnimators;
+    public int TotalSegments = 10;
+    private bool[] segmentBroken;
+
     [HideInInspector]
     private EnemyControls EC;
     private EnemyControls.BasicActions Controls;
@@ -48,10 +53,22 @@ public class EnemyController : MonoBehaviour
     private void Awake()
     {
         OnSpawn?.Invoke();
-        CurrentHealth = MaxHealth;
-        UpdateHUD();
         Player = FindObjectOfType<PlayerController>();
         EC = new EnemyControls();
+
+        //Initialize HP
+        CurrentHealth = MaxHealth;
+
+        segmentBroken = new bool[TotalSegments];
+        for (int i = 0; i < TotalSegments; i++) segmentBroken[i] = false;
+
+        UpdateHUD();
+    }
+
+    private void Start()
+    {
+        segmentBroken = new bool[TotalSegments];
+        for (int i = 0; i < TotalSegments; i++) segmentBroken[i] = false;
     }
 
     private void Update()
@@ -60,7 +77,7 @@ public class EnemyController : MonoBehaviour
         MaintainDistance();
         HandleManualAnimationInput();
 
-        if(Input.GetKey(KeyCode.G)) EnemyAnimator.Play("MoveBack");
+        if (Input.GetKey(KeyCode.G)) EnemyAnimator.Play("MoveBack");
 
     }
 
@@ -96,6 +113,8 @@ public class EnemyController : MonoBehaviour
 
     public void ReceiveDamage(AttackType strength, float damage)
     {
+        StartCoroutine(FlashDamage());
+
         CurrentHealth -= damage;
         UpdateHUD();
 
@@ -143,6 +162,22 @@ public class EnemyController : MonoBehaviour
     private void UpdateHUD()
     {
         HPBarFill.fillAmount = (float)CurrentHealth / MaxHealth;
+
+        float hpPercent = CurrentHealth / MaxHealth;
+        for (int i = 0; i < TotalSegments; i++)
+        {
+            float threshold = 1f - ((i + 1) / (float)TotalSegments); // Flip the order
+
+            if (!segmentBroken[i] && hpPercent <= threshold)
+            {
+                SegmentsAnimators[i]?.SetTrigger("Play");
+                segmentBroken[i] = true;
+            }
+            else if (segmentBroken[i] && hpPercent > threshold)
+            {
+                segmentBroken[i] = false;
+            }
+        }
     }
 
     public void PlaySoundWithRandomPitch(AudioClip clip)
@@ -213,6 +248,19 @@ public class EnemyController : MonoBehaviour
             EnemyAnimator.ResetTrigger("MoveFront");
             EnemyAnimator.SetTrigger("FrontToIdle");
             isFrontMoving = false;
+        }
+    }
+
+    //Enemy Damage Hit
+    private IEnumerator FlashDamage()
+    {
+        Renderer rend = GetComponentInChildren<Renderer>();
+        if (rend != null)
+        {
+            Color original = rend.material.color;
+            rend.material.color = Color.red;
+            yield return new WaitForSeconds(0.1f);
+            rend.material.color = original;
         }
     }
 }

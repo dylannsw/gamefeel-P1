@@ -16,6 +16,13 @@ public class HeavyFireVFXBehaviour : StateMachineBehaviour
     {
 
         ExampleHitscanRanged weapon = animator.GetComponentInParent<ExampleHitscanRanged>();
+
+        if (weapon != null) weapon.CurrentAmmo -= weapon.HeavyAmmoCost; //Update Ammo during Fire State only
+        if (weapon != null) weapon.FireRaycast(); //Fire Raycast (Only for Medium and Heavy)
+        if (weapon != null) weapon.StartHeavyBeamTick(); //Start Beam Tick Coroutine
+        weapon.UpdateHUD();
+        
+
         if (weapon != null && weapon.HeavyBeamVFXFire != null && weapon.HeavyBeamSpawnPoint != null)
         {
             //Get direction from camera center (crosshair)
@@ -54,6 +61,8 @@ public class HeavyFireVFXBehaviour : StateMachineBehaviour
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         ExampleHitscanRanged weapon = animator.GetComponentInParent<ExampleHitscanRanged>();
+        if (weapon != null) weapon.StopHeavyBeamTick(); //Stop Beam Tick Coroutine
+
         if (weapon != null && weapon.Player != null)
         {
             // Stop existing coroutine if it's running

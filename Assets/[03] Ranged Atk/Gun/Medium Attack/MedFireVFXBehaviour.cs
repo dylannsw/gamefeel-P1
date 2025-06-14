@@ -16,6 +16,11 @@ public class MedFireVFXBehaviour : StateMachineBehaviour
     {
 
         ExampleHitscanRanged weapon = animator.GetComponentInParent<ExampleHitscanRanged>();
+
+        if (weapon != null) weapon.CurrentAmmo -= weapon.MediumAmmoCost; //Update Ammo during Fire State only
+        if (weapon != null) weapon.FireRaycast(); //Fire Raycast (Only for Medium and Heavy)
+        weapon.UpdateHUD();
+
         if (weapon != null && weapon.MedBeamVFXFire != null && weapon.MedBeamSpawnPoint != null)
         {
             //Get direction from camera center (crosshair)
