@@ -5,6 +5,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.VFX;
 using static UnityEngine.EventSystems.EventTrigger;
 
 public class ExampleHitscanRanged : Weapon
@@ -46,13 +47,19 @@ public class ExampleHitscanRanged : Weapon
     public float TimeDilationDuration = 0.5f;
     public float TimeRestoreSpeed = 2f;
     Coroutine timeDilationCoroutine;
+
+    [Header("Heavy Attack")]
     public ParticleSystem HeavyBeamVFXCharge;
     public ParticleSystem HeavyBeanVFXHold;
     public ParticleSystem HeavyBeamVFXFire;
-    public Transform BeamSpawnPoint;
+    public VisualEffect HeavyBeamVFX;
+    public Transform HeavyBeamSpawnPoint;
 
+    [Header("Light Attack")]
     public ParticleSystem LightBeamVFXFire;
+    public VisualEffect LightMuzzleVFX;
     public Transform LightBeamSpawnPoint;
+
 
     [Header("HUD References")]
     public GameObject AmmoHUD;
@@ -87,6 +94,7 @@ public class ExampleHitscanRanged : Weapon
         //Make sure we arent currently in an attack
         if (!IsAttacking && CurrentAmmo >= LightAmmoCost)
         {
+            IsAttacking = true;
             CurrentAttack = AttackType.Light;
             LightAttackEvent?.Invoke();
             StartCoroutine(PerformRangedAttack(0.05f));
@@ -98,9 +106,10 @@ public class ExampleHitscanRanged : Weapon
         //Make sure we arent currently in an attack
         if (!IsAttacking && CurrentAmmo >= MediumAmmoCost)
         {
+            IsAttacking = true;
             CurrentAttack = AttackType.Medium;
             MediumAttackEvent?.Invoke();
-            StartCoroutine(PerformRangedAttack(0.5f));
+            StartCoroutine(PerformRangedAttack(1.5f));
         }
     }
 
@@ -109,10 +118,11 @@ public class ExampleHitscanRanged : Weapon
         //Make sure we arent currently in an attack
         if (!IsAttacking && CurrentAmmo >= HeavyAmmoCost)
         {
+            IsAttacking = true;
             CurrentAttack = AttackType.Heavy;
             HeavyAttackEvent?.Invoke();
 
-            StartCoroutine(PerformRangedAttack(4f));
+            StartCoroutine(PerformRangedAttack(10f));
 
             if (fovCoroutine != null) StopCoroutine(fovCoroutine);
 
@@ -124,12 +134,14 @@ public class ExampleHitscanRanged : Weapon
     {
         if (!IsAttacking)
         {
+            IsAttacking = true;
             ReloadEvent?.Invoke();
             CurrentAmmo = MaxAmmo;
             UpdateHUD();
         }
 
         //Space for custom implementation
+        StartCoroutine(EndReloadLock());
     }
 
     public IEnumerator PerformRangedAttack(float delay)
@@ -192,7 +204,7 @@ public class ExampleHitscanRanged : Weapon
         }
 
         UpdateHUD();
-        IsAttacking = false;
+        ResetAttackState();
     }
 
     private void UpdateHUD()
@@ -247,5 +259,17 @@ public class ExampleHitscanRanged : Weapon
         }
 
         Player.PlayerCamera.fieldOfView = targetFOV;
+    }
+
+    private void ResetAttackState()
+    {
+        IsAttacking = false;
+        CurrentAttack = AttackType.None;
+    }
+
+    private IEnumerator EndReloadLock()
+    {
+        yield return new WaitForSeconds(3.4f); // Adjust for reload animation time
+        ResetAttackState();
     }
 }

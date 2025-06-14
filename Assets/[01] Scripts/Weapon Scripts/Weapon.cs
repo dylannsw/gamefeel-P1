@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
-public enum AttackType { Light, Medium, Heavy }
+public enum AttackType { Light, Medium, Heavy, None }
 public abstract class Weapon : MonoBehaviour
 {
     public PlayerControls.BasicActions Controls;
