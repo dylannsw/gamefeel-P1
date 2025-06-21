@@ -28,6 +28,12 @@ public class EnemyController : MonoBehaviour
     public GameObject EnemyPrefab;
     public Image HPBarFill;
     public GameObject SpawnVFX;
+    public Transform BeamSpawnPoint;
+
+    [Header("Attack VFX References")]
+    public ParticleSystem LightBeamVFXFire;
+    public ParticleSystem MedBeamVFXFire;
+    public ParticleSystem HeavyBeamVFXFire;
 
     [Header("Event Systems")]
     public UnityEvent OnSpawn;
