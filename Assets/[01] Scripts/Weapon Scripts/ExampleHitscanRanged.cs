@@ -55,6 +55,7 @@ public class ExampleHitscanRanged : Weapon
     public ParticleSystem HeavyBeamVFXFire;
     public VisualEffect HeavyBeamVFX;
     public Transform HeavyBeamSpawnPoint;
+    public Transform HeavyChargeSpawnPoint;
     private Coroutine heavyBeamCoroutine;
     public float heavyBeamTickRate = 0.3f;
 

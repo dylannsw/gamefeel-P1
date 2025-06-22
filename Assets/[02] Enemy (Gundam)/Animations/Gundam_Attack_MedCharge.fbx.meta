@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ce3d5faf3307c604796916262a5d7c5e
+guid: 2a48383518694a746bdd2b382483f779
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -33,11 +33,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Gun_Heavy_Charge
+      name: Enemy_MedCharge
       takeName: Scene
       internalID: -623603649343465320
       firstFrame: 1
-      lastFrame: 100
+      lastFrame: 30
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

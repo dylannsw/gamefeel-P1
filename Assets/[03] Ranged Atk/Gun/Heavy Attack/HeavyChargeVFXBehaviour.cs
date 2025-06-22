@@ -15,10 +15,10 @@ public class HeavyChargeVFXBehaviour : StateMachineBehaviour
 
         weapon.cameraShake?.StartCoroutine(weapon.cameraShake.Shake(7f, 0.0075f));
 
-        if (weapon != null && weapon.HeavyBeamVFXCharge != null && weapon.HeavyBeamSpawnPoint != null)
+        if (weapon != null && weapon.HeavyBeamVFXCharge != null && weapon.HeavyChargeSpawnPoint != null)
         {
-            chargeVFX = Object.Instantiate(weapon.HeavyBeamVFXCharge, weapon.HeavyBeamSpawnPoint.position, weapon.HeavyBeamSpawnPoint.rotation);
-            chargeVFX.transform.parent = weapon.HeavyBeamSpawnPoint;
+            chargeVFX = Object.Instantiate(weapon.HeavyBeamVFXCharge, weapon.HeavyChargeSpawnPoint.position, weapon.HeavyChargeSpawnPoint.rotation);
+            chargeVFX.transform.parent = weapon.HeavyChargeSpawnPoint;
             chargeVFX.Play();
 
             weapon.HeavyBeanVFXHold = chargeVFX;

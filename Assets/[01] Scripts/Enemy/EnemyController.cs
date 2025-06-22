@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using UnityEngine.VFX;
 
 public class EnemyController : MonoBehaviour
 {
@@ -29,11 +30,15 @@ public class EnemyController : MonoBehaviour
     public Image HPBarFill;
     public GameObject SpawnVFX;
     public Transform BeamSpawnPoint;
+    //public Transform HeavyBeamSpawnPoint;
 
     [Header("Attack VFX References")]
     public ParticleSystem LightBeamVFXFire;
     public ParticleSystem MedBeamVFXFire;
+    public ParticleSystem MedBeamVFXCharge;
     public ParticleSystem HeavyBeamVFXFire;
+    public ParticleSystem HeavyBeamVFXCharge;
+    public VisualEffect HeavyBeamVFX;
 
     [Header("Event Systems")]
     public UnityEvent OnSpawn;
