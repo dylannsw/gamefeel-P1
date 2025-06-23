@@ -31,6 +31,7 @@ public class CameraRecoil : MonoBehaviour
 
     private Vector3 originalLocalPosition;
     private Quaternion originalLocalRotation;
+    public bool IsCinematic = false;
 
     void Start()
     {
@@ -40,6 +41,8 @@ public class CameraRecoil : MonoBehaviour
 
     void Update()
     {
+        if (IsCinematic) return;
+
         // Smoothly apply recoil values
         currentRotRecoil = Mathf.Lerp(currentRotRecoil, targetRotRecoil, Time.deltaTime * recoilSpeed);
         currentPosRecoil = Vector3.Lerp(currentPosRecoil, targetPosRecoil, Time.deltaTime * recoilSpeed);

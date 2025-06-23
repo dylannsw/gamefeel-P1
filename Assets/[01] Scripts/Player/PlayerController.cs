@@ -48,6 +48,15 @@ public class PlayerController : MonoBehaviour
     public Weapon CurrentWeapon;
     public List<GameObject> WeaponList = new List<GameObject>();
 
+    [Header("Special Attack")]
+    public Camera3D camera3D;
+    public UnityEvent OnFunnelSpecialActivated;
+    public FunnelManager funnelManager;
+
+    // public Animator funnelAnimator;
+    // public Animator playerAnimator;
+
+
     [HideInInspector]
     public PlayerControls.BasicActions Controls;
     private CharacterController CC;
@@ -120,6 +129,11 @@ public class PlayerController : MonoBehaviour
         //GroundedCheck(); //Removed gorund check, no longer needed
         GetInventoryInput();
         if (Keyboard.current.hKey.wasPressedThisFrame) Heal(40);
+
+        if (Input.GetKeyDown(KeyCode.Minus))
+        {
+            TriggerFunnelSpecial();
+        }
     }
 
     private void EquipWeapon(GameObject weapon)
@@ -331,7 +345,7 @@ public class PlayerController : MonoBehaviour
         GetComponent<AudioSource>().pitch = 1 + UnityEngine.Random.Range(-PitchVariation, PitchVariation);
         GetComponent<AudioSource>().PlayOneShot(clip);
     }
-    
+
     public IEnumerator SmoothRestoreSensitivity(float targetSensitivity, float duration)
     {
         float startSensitivity = Sensitivity;
@@ -346,5 +360,14 @@ public class PlayerController : MonoBehaviour
         }
 
         Sensitivity = targetSensitivity;
+    }
+
+    public void TriggerFunnelSpecial()
+    {
+        if (camera3D != null)
+            camera3D.PlayCinematic();
+
+        OnFunnelSpecialActivated?.Invoke();
+        //funnelManager.ActivateFunnels();
     }
 }
