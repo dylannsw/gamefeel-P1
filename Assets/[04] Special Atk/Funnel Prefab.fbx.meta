@@ -3,7 +3,27 @@ guid: 98a773b0735a53d4c812fdbccad09838
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Black.001
+    second: {fileID: 2100000, guid: 28d0e8357bae5ed489d5eb23ae76375e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: DarkGrey.001
+    second: {fileID: 2100000, guid: 451c3f11c548e0b4daa097d01fa6f298, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Gundam Blue.001
+    second: {fileID: 2100000, guid: dee95772a8c1f144eae9fc316188ed24, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: White.001
+    second: {fileID: 2100000, guid: 566c3c16f6dec3243863cc7d9c37e6e8, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
