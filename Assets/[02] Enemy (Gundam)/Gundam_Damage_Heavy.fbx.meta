@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4ded08526ce510e49a9d111095d4c077
+guid: 4168f19728341ba4b93282e71ef42e2c
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -33,11 +33,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Enemy_Damaged_Light
+      name: Enemy_Damaged_Heavy
       takeName: Scene
       internalID: -623603649343465320
       firstFrame: 1
-      lastFrame: 20
+      lastFrame: 22
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

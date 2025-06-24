@@ -122,6 +122,50 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &5047584
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5047586}
+  - component: {fileID: 5047585}
+  m_Layer: 0
+  m_Name: RespawnManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &5047585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5047584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7cc1bd22a01bfa40b911d459d6ed803, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &5047586
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5047584}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 11.199255, y: 2.536127, z: -3.5986998}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9414896
 GameObject:
   m_ObjectHideFlags: 0
@@ -42464,9 +42508,9 @@ MonoBehaviour:
   LightAttackRange: 50
   MediumAttackRange: 50
   HeavyAttackRange: 50
-  LightAttackDamage: 2
-  MediumAttackDamage: 10
-  HeavyAttackDamage: 1.2
+  LightAttackDamage: 1
+  MediumAttackDamage: 15
+  HeavyAttackDamage: 2
   LightHitEffectsGroup:
   - {fileID: 2196818794704894509, guid: 92c3fb9d22177bf4eb7a3c716bd13130, type: 3}
   - {fileID: 6581819978879567992, guid: d4e56048040d4574cae3f2e56e5b3c08, type: 3}
@@ -64012,6 +64056,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1473047233}
   m_Mesh: {fileID: -5002652539513901180, guid: ba8ad55c52432c9458973a60328b3451, type: 3}
+--- !u!114 &1475883303 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 603580181203026098, guid: 92827c4f0f0e15b4a88688a53b1334e0,
+    type: 3}
+  m_PrefabInstance: {fileID: 6013720644400618036}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3762869677594bb469827d32b9d7984f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1477540850
 GameObject:
   m_ObjectHideFlags: 0
@@ -114908,63 +114964,88 @@ PrefabInstance:
       objectReference: {fileID: 3880966357540614692}
     - target: {fileID: 603580181203026098, guid: 92827c4f0f0e15b4a88688a53b1334e0,
         type: 3}
-      propertyPath: OnDamagedHeavy.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 603580181203026098, guid: 92827c4f0f0e15b4a88688a53b1334e0,
+        type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 603580181203026098, guid: 92827c4f0f0e15b4a88688a53b1334e0,
+        type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 603580181203026098, guid: 92827c4f0f0e15b4a88688a53b1334e0,
+        type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1807336988}
     - target: {fileID: 603580181203026098, guid: 92827c4f0f0e15b4a88688a53b1334e0,
         type: 3}
-      propertyPath: OnDamagedLight.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 1807336988}
+      objectReference: {fileID: 1475883303}
     - target: {fileID: 603580181203026098, guid: 92827c4f0f0e15b4a88688a53b1334e0,
         type: 3}
-      propertyPath: OnDamagedMedium.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Play
+      objectReference: {fileID: 0}
+    - target: {fileID: 603580181203026098, guid: 92827c4f0f0e15b4a88688a53b1334e0,
+        type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PlaySoundWithRandomPitch
+      objectReference: {fileID: 0}
+    - target: {fileID: 603580181203026098, guid: 92827c4f0f0e15b4a88688a53b1334e0,
+        type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
       value: 
-      objectReference: {fileID: 1807336988}
-    - target: {fileID: 603580181203026098, guid: 92827c4f0f0e15b4a88688a53b1334e0,
-        type: 3}
-      propertyPath: OnDamagedHeavy.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Play
       objectReference: {fileID: 0}
     - target: {fileID: 603580181203026098, guid: 92827c4f0f0e15b4a88688a53b1334e0,
         type: 3}
-      propertyPath: OnDamagedLight.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Play
-      objectReference: {fileID: 0}
-    - target: {fileID: 603580181203026098, guid: 92827c4f0f0e15b4a88688a53b1334e0,
-        type: 3}
-      propertyPath: OnDamagedMedium.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Play
-      objectReference: {fileID: 0}
-    - target: {fileID: 603580181203026098, guid: 92827c4f0f0e15b4a88688a53b1334e0,
-        type: 3}
-      propertyPath: OnDamagedHeavy.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: UnityEngine.Animator, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 603580181203026098, guid: 92827c4f0f0e15b4a88688a53b1334e0,
         type: 3}
-      propertyPath: OnDamagedLight.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UnityEngine.Animator, UnityEngine
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: EnemyController, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 603580181203026098, guid: 92827c4f0f0e15b4a88688a53b1334e0,
         type: 3}
-      propertyPath: OnDamagedMedium.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UnityEngine.Animator, UnityEngine
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 8300000, guid: 0f2db511511b4064698a80a4bb3446fb, type: 3}
+    - target: {fileID: 603580181203026098, guid: 92827c4f0f0e15b4a88688a53b1334e0,
+        type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: Gundam_Death
       objectReference: {fileID: 0}
     - target: {fileID: 603580181203026098, guid: 92827c4f0f0e15b4a88688a53b1334e0,
         type: 3}
-      propertyPath: OnDamagedHeavy.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
-      value: Enemy_Hurt
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 8300000, guid: 0f2db511511b4064698a80a4bb3446fb, type: 3}
+    - target: {fileID: 603580181203026098, guid: 92827c4f0f0e15b4a88688a53b1334e0,
+        type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: Death
       objectReference: {fileID: 0}
     - target: {fileID: 603580181203026098, guid: 92827c4f0f0e15b4a88688a53b1334e0,
         type: 3}
-      propertyPath: OnDamagedLight.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
-      value: Enemy_Hurt
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgument
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 603580181203026098, guid: 92827c4f0f0e15b4a88688a53b1334e0,
         type: 3}
-      propertyPath: OnDamagedMedium.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
-      value: Enemy_Hurt
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.AudioClip, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 603580181203026098, guid: 92827c4f0f0e15b4a88688a53b1334e0,
+        type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4497898320404102641, guid: 92827c4f0f0e15b4a88688a53b1334e0,
         type: 3}
@@ -115933,6 +116014,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1888761634}
+  - {fileID: 5047586}
   - {fileID: 1848563942}
   - {fileID: 1533871705}
   - {fileID: 917404381}

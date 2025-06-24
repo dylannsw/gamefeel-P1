@@ -380,7 +380,7 @@ MonoBehaviour:
   turnSpeed: 50
   distance: 35
   verticalOffset: -5
-  MaxHealth: 100
+  MaxHealth: 10
   CurrentHealth: 10
   LightAttackDamage: 10
   MediumAttackDamage: 20
@@ -466,16 +466,16 @@ MonoBehaviour:
   OnDamagedLight:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 603580181203026098}
-        m_TargetAssemblyTypeName: EnemyController, Assembly-CSharp
-        m_MethodName: PlayInterruptableAnimation
+      - m_Target: {fileID: 7539630056616075636}
+        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+        m_MethodName: Play
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Light Hit
+          m_StringArgument: Enemy_Damaged_Light
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 603580181203026098}
@@ -494,16 +494,16 @@ MonoBehaviour:
   OnDamagedMedium:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 603580181203026098}
-        m_TargetAssemblyTypeName: EnemyController, Assembly-CSharp
-        m_MethodName: PlayInterruptableAnimation
+      - m_Target: {fileID: 7539630056616075636}
+        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+        m_MethodName: Play
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Medium Hit
+          m_StringArgument: Enemy_Damaged_Medium
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 603580181203026098}
@@ -522,16 +522,16 @@ MonoBehaviour:
   OnDamagedHeavy:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 603580181203026098}
-        m_TargetAssemblyTypeName: EnemyController, Assembly-CSharp
-        m_MethodName: PlayInterruptableAnimation
+      - m_Target: {fileID: 7539630056616075636}
+        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+        m_MethodName: Play
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Heavy Hit
+          m_StringArgument: Enemy_Damaged_Heavy
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 603580181203026098}
@@ -550,10 +550,10 @@ MonoBehaviour:
   OnDeath:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.Collider, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
+      - m_Target: {fileID: 603580181203026098}
+        m_TargetAssemblyTypeName: EnemyController, Assembly-CSharp
+        m_MethodName: PlayDeathStartVFX
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -562,16 +562,16 @@ MonoBehaviour:
           m_StringArgument: Death
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 603580181203026098}
-        m_TargetAssemblyTypeName: EnemyController, Assembly-CSharp
-        m_MethodName: PlayInterruptableAnimation
+      - m_Target: {fileID: 7539630056616075636}
+        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+        m_MethodName: Play
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Death
+          m_StringArgument: Gundam_Death
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 603580181203026098}
@@ -587,6 +587,11 @@ MonoBehaviour:
           m_StringArgument: Death
           m_BoolArgument: 0
         m_CallState: 2
+  DeathStartVFX: {fileID: 7242293891744526830, guid: 78e7bdecd65820b49a7284f31fa54b8c,
+    type: 3}
+  DeathEndVFX: {fileID: 6581819978879567992, guid: dfaee6f4a4594414ca8bc23f53fdaa83,
+    type: 3}
+  DeathVFXSpawnPoint: {fileID: 6451284127516886951}
   SegmentsAnimators:
   - {fileID: 8019896542745861025}
   - {fileID: 8709088064800715649}

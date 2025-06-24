@@ -51,6 +51,11 @@ public class EnemyController : MonoBehaviour
     public UnityEvent OnDamagedHeavy;
     public UnityEvent OnDeath;
 
+    [Header("Death VFX")]
+    public GameObject DeathStartVFX;
+    public GameObject DeathEndVFX;
+    public Transform DeathVFXSpawnPoint;
+
     [Header("Enemy Health Bar Segments")]
     public Animator[] SegmentsAnimators;
     public int TotalSegments = 10;
@@ -157,18 +162,24 @@ public class EnemyController : MonoBehaviour
     {
         EnemyTracker.Clear();
         OnDeath?.Invoke();
+        PlayDeathStartVFX();
         StartCoroutine(RespawnEnemy(6f));
     }
 
     IEnumerator RespawnEnemy(float delay)
     {
-        yield return new WaitForSeconds(delay);
-        Instantiate(EnemyPrefab, transform.position, Quaternion.identity);
-        //Need to trigger Spawn Animation
+        Vector3 respawnPos = transform.position;
+        Quaternion respawnRot = transform.rotation;
 
-        //Instantiate(SpawnVFX, transform.position, Quaternion.identity);
+        //Cache the prefab reference BEFORE this object is destroyed
+        GameObject prefabToSpawn = EnemyPrefab;
+
+        PlayDeathEndVFX();
+
+        RespawnManager.Instance.RespawnEnemy(prefabToSpawn, respawnPos, respawnRot, 3f);
+
         Destroy(this.gameObject);
-
+        yield break;
     }
     public void PlayInterruptableAnimation(string stateName)
     {
@@ -279,4 +290,23 @@ public class EnemyController : MonoBehaviour
             rend.material.color = original;
         }
     }
+
+    public void PlayDeathStartVFX()
+    {
+        if (DeathStartVFX != null && DeathVFXSpawnPoint != null)
+        {
+            GameObject vfx = Instantiate(DeathStartVFX, DeathVFXSpawnPoint.position, Quaternion.identity, DeathVFXSpawnPoint);
+            Destroy(vfx, 6.1f);
+        }
+    }
+
+    public void PlayDeathEndVFX()
+    {
+        if (DeathEndVFX != null && DeathVFXSpawnPoint != null)
+        {
+            GameObject vfx = Instantiate(DeathEndVFX, DeathVFXSpawnPoint.position, Quaternion.identity);
+            Destroy(vfx, 5f);
+        }
+    }
+
 }
