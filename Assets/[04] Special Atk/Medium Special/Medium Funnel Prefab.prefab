@@ -1,6 +1,37 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &3370014142689298452
+--- !u!1 &8903299182943044696
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 585130891872695134}
+  m_Layer: 0
+  m_Name: FirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &585130891872695134
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8903299182943044696}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 1.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1978970629892784681}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &2088559930692707778
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -11,17 +42,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 98a773b0735a53d4c812fdbccad09838,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 98a773b0735a53d4c812fdbccad09838,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 98a773b0735a53d4c812fdbccad09838,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 1.9
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 98a773b0735a53d4c812fdbccad09838,
         type: 3}
@@ -61,34 +92,80 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 98a773b0735a53d4c812fdbccad09838,
         type: 3}
       propertyPath: m_Name
-      value: Funnel Prefab
+      value: Medium Funnel Prefab
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 98a773b0735a53d4c812fdbccad09838,
+        type: 3}
+      insertIndex: 0
+      addedObject: {fileID: 585130891872695134}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 98a773b0735a53d4c812fdbccad09838,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8955849340779633524}
+      addedObject: {fileID: -8761126779369638921}
   m_SourcePrefab: {fileID: 100100000, guid: 98a773b0735a53d4c812fdbccad09838, type: 3}
---- !u!1 &2451607258891875653 stripped
+--- !u!1 &1170205694738077843 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 98a773b0735a53d4c812fdbccad09838,
     type: 3}
-  m_PrefabInstance: {fileID: 3370014142689298452}
+  m_PrefabInstance: {fileID: 2088559930692707778}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8955849340779633524
+--- !u!114 &-8761126779369638921
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2451607258891875653}
+  m_GameObject: {fileID: 1170205694738077843}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9566046a68fce74c8a0f1bfa7f4f3bb, type: 3}
+  m_Script: {fileID: 11500000, guid: 996ce1dcad180904e879246d5189b65f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 100
-  waitTime: 0.1
+  chargeTime: 3.5
+  aimDuration: 0.15
+  moveSpeed: 25
+  moveDuration: 1
+  moveEase:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  returnDelay: 0.5
+  laserEffectPrefab: {fileID: 8407212246703408224, guid: 9977a9782f88477469e4e23290db09e4,
+    type: 3}
+  chargingVFXPrefab: {fileID: 7242293891744526830, guid: e91f6284694dcb544842391e88436dc1,
+    type: 3}
+  firePoint: {fileID: 585130891872695134}
+  range: 100
+  fireDuration: 4.2
+  tickInterval: 0.3
+  damagePerTick: 0.5
+--- !u!4 &1978970629892784681 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 98a773b0735a53d4c812fdbccad09838,
+    type: 3}
+  m_PrefabInstance: {fileID: 2088559930692707778}
+  m_PrefabAsset: {fileID: 0}

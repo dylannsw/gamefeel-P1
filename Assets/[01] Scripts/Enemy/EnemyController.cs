@@ -27,6 +27,7 @@ public class EnemyController : MonoBehaviour
     [Header("Object References")]
     public Animator EnemyAnimator;
     public GameObject EnemyPrefab;
+    public Transform EnemyTarget;
     public Image HPBarFill;
     public GameObject SpawnVFX;
     public Transform BeamSpawnPoint;
@@ -80,6 +81,7 @@ public class EnemyController : MonoBehaviour
     {
         segmentBroken = new bool[TotalSegments];
         for (int i = 0; i < TotalSegments; i++) segmentBroken[i] = false;
+        EnemyTracker.Register(EnemyTarget.transform);
     }
 
     private void Update()
@@ -153,8 +155,9 @@ public class EnemyController : MonoBehaviour
 
     private void EnemyDeath()
     {
+        EnemyTracker.Clear();
         OnDeath?.Invoke();
-        StartCoroutine(RespawnEnemy(6.5f));
+        StartCoroutine(RespawnEnemy(6f));
     }
 
     IEnumerator RespawnEnemy(float delay)

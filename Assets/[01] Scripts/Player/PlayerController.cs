@@ -50,7 +50,9 @@ public class PlayerController : MonoBehaviour
 
     [Header("Special Attack")]
     public Camera3D camera3D;
-    public UnityEvent OnFunnelSpecialActivated;
+    public UnityEvent OnHeavySpecialActivated;
+    public UnityEvent OnMediumSpecialActivated;
+    public UnityEvent OnLightSpecialActivated;
     public FunnelManager funnelManager;
 
     // public Animator funnelAnimator;
@@ -132,7 +134,15 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Minus))
         {
-            TriggerFunnelSpecial();
+            TriggerLightSpecial();
+        }
+        if (Input.GetKeyDown(KeyCode.Equals))
+        {
+            TriggerHeavySpecial();
+        }
+        if (Input.GetKeyDown(KeyCode.End))
+        {
+            TriggerMediumSpecial();
         }
     }
 
@@ -362,12 +372,22 @@ public class PlayerController : MonoBehaviour
         Sensitivity = targetSensitivity;
     }
 
-    public void TriggerFunnelSpecial()
+    public void TriggerHeavySpecial()
     {
-        if (camera3D != null)
-            camera3D.PlayCinematic();
-
-        OnFunnelSpecialActivated?.Invoke();
-        //funnelManager.ActivateFunnels();
+        if (camera3D != null) camera3D.PlayCinematic();
+        OnHeavySpecialActivated?.Invoke();
+        funnelManager.funnelMode = 1;
+    }
+    public void TriggerMediumSpecial()
+    {
+        if (camera3D != null) camera3D.PlayCinematic();
+        OnMediumSpecialActivated?.Invoke();
+        funnelManager.funnelMode = 2;
+    }
+    public void TriggerLightSpecial()
+    {
+        if (camera3D != null) camera3D.PlayCinematic();
+        OnLightSpecialActivated?.Invoke();
+        funnelManager.funnelMode = 3;
     }
 }

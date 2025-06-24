@@ -2,13 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FunnelController : MonoBehaviour
+public class FunnelController_Heavy : MonoBehaviour
 {
     private Transform startPoint;
     private List<Transform> travelPoints;
     private Transform target;
     public float moveSpeed = 10f;
     public float waitTime = 0.5f;
+
+    [Header("VFX")]
+    public GameObject laserEffectPrefab;
+    public GameObject muzzleEffectPrefab;
+    public Transform firePoint;
+
+    [Header("Damage Settings")]
+    public float damage = 5f;
+    public float range = 100f;
 
     public void Initialize(Transform start, List<Transform> points, Transform enemyTarget)
     {
@@ -56,7 +65,30 @@ public class FunnelController : MonoBehaviour
 
     private void FireLaser()
     {
-        Debug.Log("Pew pew from " + gameObject.name);
-        // Instantiate laser VFX, do raycast, damage enemy, etc.
+        if (laserEffectPrefab != null && firePoint != null)
+        {
+            GameObject vfx = Instantiate(laserEffectPrefab, firePoint.position, firePoint.rotation);
+            Destroy(vfx, 1f);
+
+            GameObject muzzleVFX = Instantiate(muzzleEffectPrefab, firePoint.position, firePoint.rotation);
+            Destroy(muzzleVFX, 1f);
+        }
+
+        RaycastHit hit;
+        Vector3 origin = firePoint.position;
+        Vector3 direction = firePoint.forward;
+
+        if (Physics.Raycast(origin, direction, out hit, range))
+        {
+            var enemy = hit.collider.GetComponent<EnemyController>();
+            if (enemy != null)
+            {
+                enemy.ReceiveDamage(AttackType.Heavy, damage);
+            }
+        }
+
+        Debug.DrawRay(origin, direction * range, Color.cyan, 1f);
+        Debug.Log($"{gameObject.name} heavy special fired at enemy!");
+
     }
 }
