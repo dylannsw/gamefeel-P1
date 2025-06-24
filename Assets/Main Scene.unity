@@ -42467,16 +42467,22 @@ MonoBehaviour:
   LightAttackDamage: 2
   MediumAttackDamage: 10
   HeavyAttackDamage: 1.2
-  LightHitEffect: {fileID: 5156771909019710770, guid: 33166fefdfc84334c86cc39a5733eac1,
-    type: 3}
-  MediumHitEffect: {fileID: 5156771909019710770, guid: 33166fefdfc84334c86cc39a5733eac1,
-    type: 3}
-  HeavyHitEffect: {fileID: 5156771909019710770, guid: 33166fefdfc84334c86cc39a5733eac1,
-    type: 3}
-  MediumTimeDilation: 0.5
-  HeavyTimeDilation: 0.2
-  TimeDilationDuration: 1.5
-  TimeRestoreSpeed: 2
+  LightHitEffectsGroup:
+  - {fileID: 2196818794704894509, guid: 92c3fb9d22177bf4eb7a3c716bd13130, type: 3}
+  - {fileID: 6581819978879567992, guid: d4e56048040d4574cae3f2e56e5b3c08, type: 3}
+  LightHitEffectCount: 2
+  LightSphereRange: 1
+  MediumHitEffectsGroup:
+  - {fileID: 6842505873899605081, guid: 402957c6e047ae54090c023c601f9ad8, type: 3}
+  - {fileID: 6581819978879567992, guid: b8ae904088961be478d18568d4dc6f9e, type: 3}
+  MediumHitEffectCount: 2
+  MediumSphereRange: 0.2
+  HeavyHitEffectsGroup:
+  - {fileID: 6842505873899605081, guid: 402957c6e047ae54090c023c601f9ad8, type: 3}
+  - {fileID: 7349675147546690948, guid: be30d2710c0db304b98da14e1e200064, type: 3}
+  - {fileID: 6581819978879567992, guid: 04716ad8eef20f542888b526ebc52612, type: 3}
+  HeavyHitEffectCount: 3
+  HeavySphereRange: 1.5
   HeavyBeamVFXCharge: {fileID: 242824001572821024, guid: 9ecb3a919ba4e492ebeb91c0132e55fd,
     type: 3}
   HeavyBeanVFXHold: {fileID: 242824001572821024, guid: 0a79ade1f6f90480e9152166d0825073,
@@ -78896,6 +78902,12 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1804899411}
   m_Mesh: {fileID: 3956641430154956442, guid: ba8ad55c52432c9458973a60328b3451, type: 3}
+--- !u!95 &1807336988 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 7539630056616075636, guid: 92827c4f0f0e15b4a88688a53b1334e0,
+    type: 3}
+  m_PrefabInstance: {fileID: 6013720644400618036}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1808002334
 GameObject:
   m_ObjectHideFlags: 0
@@ -114894,6 +114906,66 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 3880966357540614692}
+    - target: {fileID: 603580181203026098, guid: 92827c4f0f0e15b4a88688a53b1334e0,
+        type: 3}
+      propertyPath: OnDamagedHeavy.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1807336988}
+    - target: {fileID: 603580181203026098, guid: 92827c4f0f0e15b4a88688a53b1334e0,
+        type: 3}
+      propertyPath: OnDamagedLight.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1807336988}
+    - target: {fileID: 603580181203026098, guid: 92827c4f0f0e15b4a88688a53b1334e0,
+        type: 3}
+      propertyPath: OnDamagedMedium.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1807336988}
+    - target: {fileID: 603580181203026098, guid: 92827c4f0f0e15b4a88688a53b1334e0,
+        type: 3}
+      propertyPath: OnDamagedHeavy.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Play
+      objectReference: {fileID: 0}
+    - target: {fileID: 603580181203026098, guid: 92827c4f0f0e15b4a88688a53b1334e0,
+        type: 3}
+      propertyPath: OnDamagedLight.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Play
+      objectReference: {fileID: 0}
+    - target: {fileID: 603580181203026098, guid: 92827c4f0f0e15b4a88688a53b1334e0,
+        type: 3}
+      propertyPath: OnDamagedMedium.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Play
+      objectReference: {fileID: 0}
+    - target: {fileID: 603580181203026098, guid: 92827c4f0f0e15b4a88688a53b1334e0,
+        type: 3}
+      propertyPath: OnDamagedHeavy.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UnityEngine.Animator, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 603580181203026098, guid: 92827c4f0f0e15b4a88688a53b1334e0,
+        type: 3}
+      propertyPath: OnDamagedLight.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UnityEngine.Animator, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 603580181203026098, guid: 92827c4f0f0e15b4a88688a53b1334e0,
+        type: 3}
+      propertyPath: OnDamagedMedium.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UnityEngine.Animator, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 603580181203026098, guid: 92827c4f0f0e15b4a88688a53b1334e0,
+        type: 3}
+      propertyPath: OnDamagedHeavy.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: Enemy_Hurt
+      objectReference: {fileID: 0}
+    - target: {fileID: 603580181203026098, guid: 92827c4f0f0e15b4a88688a53b1334e0,
+        type: 3}
+      propertyPath: OnDamagedLight.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: Enemy_Hurt
+      objectReference: {fileID: 0}
+    - target: {fileID: 603580181203026098, guid: 92827c4f0f0e15b4a88688a53b1334e0,
+        type: 3}
+      propertyPath: OnDamagedMedium.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: Enemy_Hurt
+      objectReference: {fileID: 0}
     - target: {fileID: 4497898320404102641, guid: 92827c4f0f0e15b4a88688a53b1334e0,
         type: 3}
       propertyPath: m_Name

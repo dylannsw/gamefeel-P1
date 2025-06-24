@@ -164,7 +164,9 @@ public class EnemyController : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         Instantiate(EnemyPrefab, transform.position, Quaternion.identity);
-        Instantiate(SpawnVFX, transform.position, Quaternion.identity);
+        //Need to trigger Spawn Animation
+
+        //Instantiate(SpawnVFX, transform.position, Quaternion.identity);
         Destroy(this.gameObject);
 
     }

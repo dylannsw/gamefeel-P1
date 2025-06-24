@@ -40,13 +40,22 @@ public class ExampleHitscanRanged : Weapon
     public float HeavyAttackDamage = 20f;
 
     [Header("Feedback Parameters")]
-    public GameObject LightHitEffect;
-    public GameObject MediumHitEffect;
-    public GameObject HeavyHitEffect;
-    public float MediumTimeDilation = 0.5f;
-    public float HeavyTimeDilation = 0.3f;
-    public float TimeDilationDuration = 0.5f;
-    public float TimeRestoreSpeed = 2f;
+    // public GameObject LightHitEffect;
+    // public GameObject MediumHitEffect;
+    // public GameObject HeavyHitEffect;
+    public GameObject[] LightHitEffectsGroup;
+    public int LightHitEffectCount = 2;
+    public float LightSphereRange = 1;
+    public GameObject[] MediumHitEffectsGroup;
+    public int MediumHitEffectCount = 2;
+    public float MediumSphereRange = 2;
+    public GameObject[] HeavyHitEffectsGroup;
+    public int HeavyHitEffectCount = 3;
+    public float HeavySphereRange = 5;
+    private float MediumTimeDilation = 0.5f;
+    private float HeavyTimeDilation = 0.3f;
+    private float TimeDilationDuration = 0.5f;
+    private float TimeRestoreSpeed = 2f;
     Coroutine timeDilationCoroutine;
 
     [Header("Heavy Attack")]
@@ -95,9 +104,8 @@ public class ExampleHitscanRanged : Weapon
 
         //Camera Recoil Reference
         cameraRecoil = Player.PlayerCamera.transform.parent.GetComponent<CameraRecoil>();
-
-
     }
+
     public override void OnWeaponEquip()
     {
         EquipEvent?.Invoke();
@@ -175,7 +183,8 @@ public class ExampleHitscanRanged : Weapon
                                    out RaycastHit lightHit,
                                    LightAttackRange))
                 {
-                    Instantiate(LightHitEffect, lightHit.point, Quaternion.identity);
+                    //Instantiate(LightHitEffect, lightHit.point, Quaternion.identity);
+                    SpawnMultipleVFX(lightHit.point, Quaternion.LookRotation(lightHit.normal), LightHitEffectsGroup, LightHitEffectCount, LightSphereRange);
                     if (lightHit.collider.gameObject.GetComponent<EnemyController>())
                     {
                         var enemy = lightHit.collider.gameObject.GetComponent<EnemyController>();
@@ -302,7 +311,7 @@ public class ExampleHitscanRanged : Weapon
     public void FireRaycast()
     {
         RaycastHit hit;
-        GameObject effect = null;
+        GameObject[] effect = null;
         float range = 0;
         float damage = 0;
 
@@ -311,12 +320,12 @@ public class ExampleHitscanRanged : Weapon
             case AttackType.Medium:
                 range = MediumAttackRange;
                 damage = MediumAttackDamage;
-                effect = MediumHitEffect;
+                effect = MediumHitEffectsGroup;
                 break;
             case AttackType.Heavy:
                 range = HeavyAttackRange;
                 damage = HeavyAttackDamage;
-                effect = HeavyHitEffect;
+                effect = HeavyHitEffectsGroup;
                 break;
             default:
                 return;
@@ -330,7 +339,10 @@ public class ExampleHitscanRanged : Weapon
                             out hit, range))
         {
             if (effect != null)
-                Instantiate(effect, hit.point, Quaternion.identity);
+            {
+                if (CurrentAttack == AttackType.Medium) SpawnMultipleVFX(hit.point, Quaternion.LookRotation(hit.normal), effect, MediumHitEffectCount, MediumSphereRange);
+                else if (CurrentAttack == AttackType.Heavy) SpawnMultipleVFX(hit.point, Quaternion.LookRotation(hit.normal), effect, HeavyHitEffectCount, HeavySphereRange);
+            }
 
             var enemy = hit.collider.GetComponent<EnemyController>();
             if (enemy != null)
@@ -382,13 +394,25 @@ public class ExampleHitscanRanged : Weapon
                     enemy.ReceiveDamage(AttackType.Heavy, HeavyAttackDamage);
                 }
 
-                if (HeavyHitEffect != null)
-                    Instantiate(HeavyHitEffect, hit.point, Quaternion.identity);
+                if (HeavyHitEffectsGroup != null)
+                    //Instantiate(HeavyHitEffect, hit.point, Quaternion.identity);
+                    SpawnMultipleVFX(hit.point, Quaternion.LookRotation(hit.normal), HeavyHitEffectsGroup, HeavyHitEffectCount, HeavySphereRange);
             }
 
             yield return new WaitForSeconds(heavyBeamTickRate);
         }
     }
 
+    private void SpawnMultipleVFX(Vector3 hitPoint, Quaternion rotation, GameObject[] vfxPrefabs, int count = 4, float spread = 0.3f)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            Vector3 offset = UnityEngine.Random.insideUnitSphere * spread;
+            offset.y = Mathf.Abs(offset.y);
 
+            GameObject chosenVFX = vfxPrefabs[UnityEngine.Random.Range(0, vfxPrefabs.Length)];
+            GameObject instance = Instantiate(chosenVFX, hitPoint + offset, rotation);
+            Destroy(instance, 3f);
+        }
+    }
 }
