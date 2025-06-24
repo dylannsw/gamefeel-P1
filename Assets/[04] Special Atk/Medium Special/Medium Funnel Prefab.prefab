@@ -158,6 +158,8 @@ MonoBehaviour:
     type: 3}
   chargingVFXPrefab: {fileID: 7242293891744526830, guid: e91f6284694dcb544842391e88436dc1,
     type: 3}
+  hitVFXPrefab: {fileID: 6581819978879567992, guid: d4e56048040d4574cae3f2e56e5b3c08,
+    type: 3}
   firePoint: {fileID: 585130891872695134}
   range: 100
   fireDuration: 4.2

@@ -20,6 +20,7 @@ public class FunnelController_Medium : MonoBehaviour
     public GameObject laserEffectPrefab;
     public GameObject chargingVFXPrefab;
     private GameObject activeChargeVFX;
+    public GameObject hitVFXPrefab;
     public Transform firePoint;
 
     [Header("Damage Settings")]
@@ -125,6 +126,9 @@ public class FunnelController_Medium : MonoBehaviour
                     enemy.ReceiveDamage(AttackType.Medium, damagePerTick);
                     Debug.Log("Tick damage dealt");
                 }
+
+                if (hitVFXPrefab != null) Instantiate(hitVFXPrefab, hit.point, Quaternion.LookRotation(hit.normal));
+                Destroy(hitVFXPrefab, 2f);
             }
 
             Debug.DrawRay(origin, direction * range, Color.magenta, tickInterval);

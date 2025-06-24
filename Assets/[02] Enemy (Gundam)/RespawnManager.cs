@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class RespawnManager : MonoBehaviour
 {
+    public GameObject enemyPrefab;
     public static RespawnManager Instance;
 
     private void Awake()
@@ -11,17 +12,17 @@ public class RespawnManager : MonoBehaviour
         Instance = this;
     }
 
-    public void RespawnEnemy(GameObject prefab, Vector3 position, Quaternion rotation, float delay)
+    public void RespawnEnemy(Vector3 position, Quaternion rotation, float delay)
     {
-        StartCoroutine(DelayedSpawn(prefab, position, rotation, delay));
+        StartCoroutine(DelayedSpawn(position, rotation, delay));
     }
 
-    private IEnumerator DelayedSpawn(GameObject prefab, Vector3 position, Quaternion rotation, float delay)
+    private IEnumerator DelayedSpawn(Vector3 position, Quaternion rotation, float delay)
     {
         yield return new WaitForSeconds(delay);
 
-        if (prefab != null)
-            Instantiate(prefab, position, rotation);
+        if (enemyPrefab != null)
+            Instantiate(enemyPrefab, position, rotation);
     }
 }
 

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class FunnelManager : MonoBehaviour
 {
-    public enum FunnelAttackMode { Light, Medium, Heavy}
+    public enum FunnelAttackMode { Light, Medium, Heavy }
 
     [Header("General Reference")]
     public Transform enemy;
@@ -26,13 +26,16 @@ public class FunnelManager : MonoBehaviour
     public Transform[] mediumStartPoints;
     public Transform[] mediumFirePoints;
 
-
     [Header("Heavy Special Attack")]
     public GameObject heavyFunnelPrefab;
     public Transform[] pathPoints;
     public Transform[] funnelLaunchPoints;
     public int numberOfFunnels = 3;
     public int pointsPerFunnel = 3;
+    public List<Transform> finalPhasePoints = new List<Transform>();
+    private List<Transform> assignedFinalPoints = new List<Transform>(); // Temp tracking
+    private List<FunnelController_Heavy> heavyReadyFunnels = new List<FunnelController_Heavy>();
+    private int totalHeavyFunnelsExpected = 0;
 
     public void ActivateFunnels(FunnelAttackMode mode)
     {
@@ -48,7 +51,6 @@ public class FunnelManager : MonoBehaviour
                 ActivateHeavyFunnels();
                 break;
         }
-        
     }
 
     public void ActivateLightFunnels()
@@ -76,8 +78,8 @@ public class FunnelManager : MonoBehaviour
             controller.Initialize(mediumStartPoints[i], mediumFirePoints[i], enemy);
         }
 
+        // Triggers heavy ranged attack together with medium funnel
         weapon.PerformHeavyAttack();
-
     }
 
     public void ActivateHeavyFunnels()
@@ -85,13 +87,43 @@ public class FunnelManager : MonoBehaviour
         enemy = EnemyTracker.CurrentEnemy;
         if (enemy == null) return;
 
+        heavyReadyFunnels.Clear();
+        totalHeavyFunnelsExpected = numberOfFunnels;
+
+        assignedFinalPoints.Clear();
+
         for (int i = 0; i < numberOfFunnels; i++)
         {
+            if (i >= funnelLaunchPoints.Length || i >= finalPhasePoints.Count)
+            {
+                Debug.LogWarning("Not enough launch or final points!");
+                break;
+            }
+
             GameObject funnel = Instantiate(heavyFunnelPrefab, funnelLaunchPoints[i].position, funnelLaunchPoints[i].rotation);
             FunnelController_Heavy controller = funnel.GetComponent<FunnelController_Heavy>();
-            List<Transform> selectedPoints = pathPoints.OrderBy(x => Random.value).Take(pointsPerFunnel).ToList();
-            controller.Initialize(funnelLaunchPoints[i], selectedPoints, enemy);
+
+            List<Transform> selectedPath = pathPoints.OrderBy(x => Random.value).Take(pointsPerFunnel).ToList();
+
+            Transform uniqueFinalPoint = finalPhasePoints[i]; // Guarantee unique point per funnel
+            assignedFinalPoints.Add(uniqueFinalPoint);
+
+            controller.Initialize(funnelLaunchPoints[i], selectedPath, enemy, this, uniqueFinalPoint); // Pass unique final point
+        }
+    }
+
+    public void RegisterReadyFunnel(FunnelController_Heavy funnel)
+    {
+        if (!heavyReadyFunnels.Contains(funnel))
+            heavyReadyFunnels.Add(funnel);
+
+        if (heavyReadyFunnels.Count >= totalHeavyFunnelsExpected)
+        {
+            // All funnels reached final point, fire final beam in sync
+            foreach (var f in heavyReadyFunnels)
+                f.FireFinalLaserAndReturn();
+
+            heavyReadyFunnels.Clear(); // Reset after sync shot
         }
     }
 }
-

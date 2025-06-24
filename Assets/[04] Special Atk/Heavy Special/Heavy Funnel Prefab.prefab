@@ -223,15 +223,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9566046a68fce74c8a0f1bfa7f4f3bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 90
+  moveSpeed: 125
   waitTime: 0.1
-  laserEffectPrefab: {fileID: 8407212246703408224, guid: a1d904e54574af142a5225f1b9ec07c7,
+  laserEffectPrefab: {fileID: 8407212246703408224, guid: 1123a0e2b3d5df14bbe2beb6ac2f127d,
     type: 3}
+  syncFireLaserEffectPrefab: {fileID: 8407212246703408224, guid: 930d7075edb9df5489e299819e8815c6,
+    type: 3}
+  finalChargeVFXPrefab: {fileID: 7242293891744526830, guid: 507ade1cc7b1ab64ea33f5d3814fe35b,
+    type: 3}
+  finalHitVFXPrefabs:
+  - {fileID: 6581819978879567992, guid: 04716ad8eef20f542888b526ebc52612, type: 3}
+  - {fileID: 6581819978879567992, guid: b8ae904088961be478d18568d4dc6f9e, type: 3}
+  finalChargeDuration: 2
   muzzleEffectPrefab: {fileID: 718690339124133421, guid: 5086b5cc1f65c1a45866ad11704d92e9,
     type: 3}
   firePoint: {fileID: 2344418708565075962}
-  damage: 3
+  hitVFXPrefabs:
+  - {fileID: 6581819978879567992, guid: d4e56048040d4574cae3f2e56e5b3c08, type: 3}
+  - {fileID: 2196818794704894509, guid: 92c3fb9d22177bf4eb7a3c716bd13130, type: 3}
+  damage: 7
   range: 100
+  tickDamage: 5
+  tickRate: 0.15
+  tickDuration: 5
+  finalPathPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!4 &2976329033252646911 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 98a773b0735a53d4c812fdbccad09838,

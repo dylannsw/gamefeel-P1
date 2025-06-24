@@ -21,6 +21,7 @@ public class FunnelController_Light : MonoBehaviour
     [Header("VFX")]
     public GameObject laserEffectPrefab;
     public GameObject muzzleEffectPrefab;
+    public GameObject hitVFXPrefab;
     public Transform firePoint;
 
     [Header("Damage Settings")]
@@ -121,6 +122,13 @@ public class FunnelController_Light : MonoBehaviour
             {
                 enemy.ReceiveDamage(AttackType.Light, damage);
             }
+
+            if (hitVFXPrefab != null)
+            {
+                GameObject vfxInstance = Instantiate(hitVFXPrefab, hit.point, Quaternion.LookRotation(hit.normal));
+                Destroy(vfxInstance, 1f);
+            }
+
         }
 
         Debug.DrawRay(origin, direction * range, Color.cyan, 1f);

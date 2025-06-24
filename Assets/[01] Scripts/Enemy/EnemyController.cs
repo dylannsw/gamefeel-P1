@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -55,6 +56,7 @@ public class EnemyController : MonoBehaviour
     public GameObject DeathStartVFX;
     public GameObject DeathEndVFX;
     public Transform DeathVFXSpawnPoint;
+    public bool isDead = false;
 
     [Header("Enemy Health Bar Segments")]
     public Animator[] SegmentsAnimators;
@@ -73,11 +75,12 @@ public class EnemyController : MonoBehaviour
         Player = FindObjectOfType<PlayerController>();
         EC = new EnemyControls();
 
-        //Initialize HP
-        CurrentHealth = MaxHealth;
+        CurrentHealth = MaxHealth; //Initialize HP
 
         segmentBroken = new bool[TotalSegments];
         for (int i = 0; i < TotalSegments; i++) segmentBroken[i] = false;
+
+        isDead = false; //Set isDead to false when instantiated
 
         UpdateHUD();
     }
@@ -131,6 +134,8 @@ public class EnemyController : MonoBehaviour
 
     public void ReceiveDamage(AttackType strength, float damage)
     {
+        if (isDead) return;
+
         StartCoroutine(FlashDamage());
 
         CurrentHealth -= damage;
@@ -161,26 +166,26 @@ public class EnemyController : MonoBehaviour
     private void EnemyDeath()
     {
         EnemyTracker.Clear();
+        isDead = true;
         OnDeath?.Invoke();
         PlayDeathStartVFX();
-        StartCoroutine(RespawnEnemy(6f));
+        StartCoroutine(RespawnEnemy(5f));
     }
 
     IEnumerator RespawnEnemy(float delay)
     {
-        Vector3 respawnPos = transform.position;
-        Quaternion respawnRot = transform.rotation;
-
-        //Cache the prefab reference BEFORE this object is destroyed
-        GameObject prefabToSpawn = EnemyPrefab;
+        yield return new WaitForSeconds(delay);
+        Vector3 pos = transform.position;
+        Quaternion rot = transform.rotation;
 
         PlayDeathEndVFX();
 
-        RespawnManager.Instance.RespawnEnemy(prefabToSpawn, respawnPos, respawnRot, 3f);
+        RespawnManager.Instance.RespawnEnemy(pos, rot, 3f);
 
-        Destroy(this.gameObject);
+        Destroy(gameObject);
         yield break;
     }
+
     public void PlayInterruptableAnimation(string stateName)
     {
         EnemyAnimator.Play(stateName, -1, 0);
@@ -296,7 +301,7 @@ public class EnemyController : MonoBehaviour
         if (DeathStartVFX != null && DeathVFXSpawnPoint != null)
         {
             GameObject vfx = Instantiate(DeathStartVFX, DeathVFXSpawnPoint.position, Quaternion.identity, DeathVFXSpawnPoint);
-            Destroy(vfx, 6.1f);
+            Destroy(vfx, 4.9f);
         }
     }
 

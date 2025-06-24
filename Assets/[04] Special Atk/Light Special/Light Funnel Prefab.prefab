@@ -4989,6 +4989,8 @@ MonoBehaviour:
     type: 3}
   muzzleEffectPrefab: {fileID: 718690339124133421, guid: 2d34adaa108610f4bbae4630069c51bf,
     type: 3}
+  hitVFXPrefab: {fileID: 6581819978879567992, guid: 189e23898732e934288c85b716cfb2fd,
+    type: 3}
   firePoint: {fileID: 585130891872695134}
   damage: 1
   range: 100
