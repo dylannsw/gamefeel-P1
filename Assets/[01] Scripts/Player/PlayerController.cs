@@ -54,11 +54,7 @@ public class PlayerController : MonoBehaviour
     public UnityEvent OnMediumSpecialActivated;
     public UnityEvent OnLightSpecialActivated;
     public FunnelManager funnelManager;
-
-    // public Animator funnelAnimator;
-    // public Animator playerAnimator;
-
-
+    
     [HideInInspector]
     public PlayerControls.BasicActions Controls;
     private CharacterController CC;
@@ -134,15 +130,15 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Minus))
         {
-            TriggerLightSpecial();
+            if(!funnelManager.FunnelAttackState()) TriggerLightSpecial();
         }
         if (Input.GetKeyDown(KeyCode.Equals))
         {
-            TriggerHeavySpecial();
+            if(!funnelManager.FunnelAttackState()) TriggerHeavySpecial();
         }
         if (Input.GetKeyDown(KeyCode.End))
         {
-            TriggerMediumSpecial();
+            if(!funnelManager.FunnelAttackState()) TriggerMediumSpecial();
         }
     }
 
@@ -377,17 +373,20 @@ public class PlayerController : MonoBehaviour
         if (camera3D != null) camera3D.PlayCinematic();
         OnHeavySpecialActivated?.Invoke();
         funnelManager.funnelMode = 1;
+        funnelManager.OnFunnelAttackStart();
     }
     public void TriggerMediumSpecial()
     {
         if (camera3D != null) camera3D.PlayCinematic();
         OnMediumSpecialActivated?.Invoke();
         funnelManager.funnelMode = 2;
+        funnelManager.OnFunnelAttackStart();
     }
     public void TriggerLightSpecial()
     {
         if (camera3D != null) camera3D.PlayCinematic();
         OnLightSpecialActivated?.Invoke();
         funnelManager.funnelMode = 3;
+        funnelManager.OnFunnelAttackStart();
     }
 }

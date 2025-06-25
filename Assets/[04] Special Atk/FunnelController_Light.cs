@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -28,13 +29,16 @@ public class FunnelController_Light : MonoBehaviour
     public float damage = 5f;
     public float range = 100f;
 
-    public void Initialize(Transform start, Transform fire, Transform enemyTarget, int shots, float interval)
+    private FunnelManager manager;
+
+    public void Initialize(Transform start, Transform fire, Transform enemyTarget, int shots, float interval, FunnelManager mgr)
     {
         startPos = start;
         firePos = fire;
         target = enemyTarget;
         numberOfShots = shots;
         intervalBetweenShots = interval;
+        manager = mgr;
 
         transform.position = start.position;
         StartCoroutine(FunnelRoutine());
@@ -57,6 +61,7 @@ public class FunnelController_Light : MonoBehaviour
         yield return StartCoroutine(MoveToPoint(startPos));
 
         Destroy(gameObject);
+        manager.OnFunnelAttackFinished();
     }
 
     private IEnumerator MoveToPoint(Transform destination)

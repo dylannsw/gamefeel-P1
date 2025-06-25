@@ -31,11 +31,14 @@ public class FunnelController_Medium : MonoBehaviour
     public float tickInterval = 0.2f;
     public float damagePerTick = 3f;
 
-    public void Initialize(Transform start, Transform fire, Transform enemyTarget)
+    private FunnelManager manager;
+
+    public void Initialize(Transform start, Transform fire, Transform enemyTarget, FunnelManager mgr)
     {
         startPos = start;
         firePos = fire;
         target = enemyTarget;
+        manager = mgr;
 
         transform.position = start.position;
         StartCoroutine(FunnelRoutine());
@@ -61,6 +64,7 @@ public class FunnelController_Medium : MonoBehaviour
         yield return StartCoroutine(MoveToPoint(startPos));
 
         Destroy(gameObject);
+        manager.OnFunnelAttackFinished();
     }
 
     private IEnumerator MoveToPoint(Transform destination)
@@ -127,8 +131,8 @@ public class FunnelController_Medium : MonoBehaviour
                     Debug.Log("Tick damage dealt");
                 }
 
-                if (hitVFXPrefab != null) Instantiate(hitVFXPrefab, hit.point, Quaternion.LookRotation(hit.normal));
-                Destroy(hitVFXPrefab, 2f);
+                GameObject vfx = Instantiate(hitVFXPrefab, hit.point, Quaternion.LookRotation(hit.normal));
+                Destroy(vfx, 2f);
             }
 
             Debug.DrawRay(origin, direction * range, Color.magenta, tickInterval);

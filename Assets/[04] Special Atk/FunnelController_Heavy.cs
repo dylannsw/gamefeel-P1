@@ -88,6 +88,7 @@ public class FunnelController_Heavy : MonoBehaviour
         yield return StartCoroutine(MoveToPoint(startPoint));
 
         Destroy(gameObject);
+        manager.OnFunnelAttackFinished();
     }
 
     private IEnumerator PlayFinalChargeVFX()
@@ -145,7 +146,7 @@ public class FunnelController_Heavy : MonoBehaviour
         if (laserVFX != null && firePoint != null)
         {
             GameObject vfx = Instantiate(laserVFX, firePoint.position, firePoint.rotation);
-            Destroy(vfx, 5.5f);
+            Destroy(vfx, 6.2f);
         }
 
         if (muzzleEffectPrefab != null)

@@ -11,6 +11,8 @@ public class FunnelManager : MonoBehaviour
     public Transform enemy;
     public int funnelMode = 0;
     public ExampleHitscanRanged weapon;
+    public Transform playerTransform;
+    private bool isFunnelAttackActive = false;
 
     [Header("Light Special Attack")]
     public Transform lightFunnelParent;
@@ -62,7 +64,7 @@ public class FunnelManager : MonoBehaviour
         {
             GameObject funnel = Instantiate(lightFunnelPrefab, lightStartPoints[i].position, lightStartPoints[i].rotation, lightFunnelParent);
             FunnelController_Light controller = funnel.GetComponent<FunnelController_Light>();
-            controller.Initialize(lightStartPoints[i], lightFirePoints[i], enemy, lightShots, lightShotInterval);
+            controller.Initialize(lightStartPoints[i], lightFirePoints[i], enemy, lightShots, lightShotInterval, this);
         }
     }
 
@@ -75,7 +77,7 @@ public class FunnelManager : MonoBehaviour
         {
             GameObject funnel = Instantiate(mediumFunnelPrefab, mediumStartPoints[i].position, mediumStartPoints[i].rotation, mediumFunnelParent);
             FunnelController_Medium controller = funnel.GetComponent<FunnelController_Medium>();
-            controller.Initialize(mediumStartPoints[i], mediumFirePoints[i], enemy);
+            controller.Initialize(mediumStartPoints[i], mediumFirePoints[i], enemy, this);
         }
 
         // Triggers heavy ranged attack together with medium funnel
@@ -100,7 +102,7 @@ public class FunnelManager : MonoBehaviour
                 break;
             }
 
-            GameObject funnel = Instantiate(heavyFunnelPrefab, funnelLaunchPoints[i].position, funnelLaunchPoints[i].rotation);
+            GameObject funnel = Instantiate(heavyFunnelPrefab, funnelLaunchPoints[i].position, funnelLaunchPoints[i].rotation, playerTransform);
             FunnelController_Heavy controller = funnel.GetComponent<FunnelController_Heavy>();
 
             List<Transform> selectedPath = pathPoints.OrderBy(x => Random.value).Take(pointsPerFunnel).ToList();
@@ -126,4 +128,21 @@ public class FunnelManager : MonoBehaviour
             heavyReadyFunnels.Clear(); // Reset after sync shot
         }
     }
+
+    public void OnFunnelAttackFinished()
+    {
+        isFunnelAttackActive = false;
+    }
+
+    public void OnFunnelAttackStart()
+    {
+        isFunnelAttackActive = true;
+    }
+
+    public bool FunnelAttackState()
+    {
+        if (isFunnelAttackActive) return true;
+        else return false;
+    }
+
 }
