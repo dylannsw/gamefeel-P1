@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
     public GameObject PauseMenu;
     public TextMeshProUGUI HealthText;
     private bool[] segmentBroken;
+    public HUDManager hUDManager;
 
     [Header("Player Health Bar HUD")]
     public Animator[] SegmentAnimators;
@@ -54,6 +55,7 @@ public class PlayerController : MonoBehaviour
     public UnityEvent OnMediumSpecialActivated;
     public UnityEvent OnLightSpecialActivated;
     public FunnelManager funnelManager;
+    public SpecialBarManager specialBarHUD;
     
     [HideInInspector]
     public PlayerControls.BasicActions Controls;
@@ -130,15 +132,28 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Minus))
         {
-            if(!funnelManager.FunnelAttackState()) TriggerLightSpecial();
+            if (!funnelManager.FunnelAttackState() && specialBarHUD.CanUseLight())
+            {
+                TriggerLightSpecial();
+                specialBarHUD.SpendCharge(specialBarHUD.lightCost);
+            }
         }
+        
         if (Input.GetKeyDown(KeyCode.Equals))
         {
-            if(!funnelManager.FunnelAttackState()) TriggerHeavySpecial();
+            if (!funnelManager.FunnelAttackState() && specialBarHUD.CanUseHeavy())
+            {
+                TriggerHeavySpecial();
+                specialBarHUD.SpendCharge(specialBarHUD.heavyCost);
+            }
         }
         if (Input.GetKeyDown(KeyCode.End))
         {
-            if(!funnelManager.FunnelAttackState()) TriggerMediumSpecial();
+            if (!funnelManager.FunnelAttackState() && specialBarHUD.CanUseMedium())
+            {
+                TriggerMediumSpecial();
+                specialBarHUD.SpendCharge(specialBarHUD.mediumCost);
+            }
         }
     }
 
@@ -286,12 +301,16 @@ public class PlayerController : MonoBehaviour
     {
         CurrentHP -= damage;
         CurrentHP = Mathf.Clamp(CurrentHP, 0, MaxHP);
+
+        hUDManager.TriggerFlash(); //Trigger HUD Damage Flash
+        
         UpdateHUD();
 
         if (CurrentHP <= 0)
         {
             PC.Disable();
             OnDeath?.Invoke();
+            specialBarHUD.EmptyCharge();
             return;
         }
 

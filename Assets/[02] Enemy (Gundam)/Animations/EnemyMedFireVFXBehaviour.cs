@@ -21,11 +21,6 @@ public class EnemyMedFireVFXBehaviour : StateMachineBehaviour
             ParticleSystem beam = Object.Instantiate(enemy.MedBeamVFXFire, enemy.BeamSpawnPoint.position, rotation);
             beam.Play();
             Object.Destroy(beam.gameObject, 2f);
-
-            // if (weapon != null && weapon.LightMuzzleVFX != null)
-            // {
-            //     weapon.LightMuzzleVFX.SendEvent("OnPlay");
-            // }
         }
     }
 }

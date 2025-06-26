@@ -181,8 +181,8 @@ public class EnemyController : MonoBehaviour
         PlayDeathEndVFX();
 
         RespawnManager.Instance.RespawnEnemy(pos, rot, 3f);
-
         Destroy(gameObject);
+
         yield break;
     }
 

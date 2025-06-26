@@ -80,11 +80,14 @@ public class ExampleHitscanRanged : Weapon
     public VisualEffect LightMuzzleVFX;
     public Transform LightBeamSpawnPoint;
 
+    [Header("Special Bar HUD")]
+    public SpecialBarManager specialBarHUD;
 
     [Header("HUD References")]
     public GameObject AmmoHUD;
     public Image AmmoFill;
     public TextMeshProUGUI AmmoText;
+    public CrosshairController crosshairController;
 
     private void Awake()
     {
@@ -104,6 +107,8 @@ public class ExampleHitscanRanged : Weapon
 
         //Camera Recoil Reference
         cameraRecoil = Player.PlayerCamera.transform.parent.GetComponent<CameraRecoil>();
+
+        UpdateHUD();
     }
 
     public override void OnWeaponEquip()
@@ -121,6 +126,7 @@ public class ExampleHitscanRanged : Weapon
             LightAttackEvent?.Invoke();
             StartCoroutine(PerformRangedAttack(0.05f));
         }
+        else PerformReload();
     }
 
     public override void PerformMediumAttack()
@@ -133,6 +139,7 @@ public class ExampleHitscanRanged : Weapon
             MediumAttackEvent?.Invoke();
             StartCoroutine(PerformRangedAttack(2f));
         }
+        else PerformReload();
     }
 
     public override void PerformHeavyAttack()
@@ -150,6 +157,7 @@ public class ExampleHitscanRanged : Weapon
 
             fovCoroutine = StartCoroutine(ChangeFOV(heavyAttackFOV));
         }
+        else PerformReload();
     }
 
     public override void PerformReload()
@@ -189,7 +197,11 @@ public class ExampleHitscanRanged : Weapon
                     {
                         var enemy = lightHit.collider.gameObject.GetComponent<EnemyController>();
                         enemy.ReceiveDamage(AttackType.Light, LightAttackDamage);
+                        specialBarHUD.AddCharge(specialBarHUD.lightRechargeAmount);
                     }
+
+                    //Crosshair pusle for light attacks
+                    crosshairController.Pulse(5f, 0.1f, 0.1f);
                 }
 
                 if (cameraRecoil != null) cameraRecoil.FireRecoil(CameraRecoil.RecoilStrength.Light);
@@ -349,7 +361,7 @@ public class ExampleHitscanRanged : Weapon
                 enemy.ReceiveDamage(CurrentAttack, damage);
         }
 
-        CurrentAmmo -= GetAmmoCost(CurrentAttack);
+        //CurrentAmmo -= GetAmmoCost(CurrentAttack);
         UpdateHUD();
     }
 
@@ -392,6 +404,7 @@ public class ExampleHitscanRanged : Weapon
                 if (enemy != null)
                 {
                     enemy.ReceiveDamage(AttackType.Heavy, HeavyAttackDamage);
+                    specialBarHUD.AddCharge(specialBarHUD.HeavyRechargeAmount);
                 }
 
                 if (HeavyHitEffectsGroup != null)

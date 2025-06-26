@@ -6,10 +6,14 @@ public class MedFireVFXBehaviour : StateMachineBehaviour
 {
     public float BeamLifetime = 10f;
     public Transform gun;
+    public SpecialBarManager specialBarHUD;
+    public CrosshairController crosshairController;
 
     private void Awake()
     {
         gun = GameObject.Find("Gun").transform;
+        specialBarHUD = GameObject.Find("SpecialBarManager").GetComponent<SpecialBarManager>();
+        crosshairController = GameObject.Find("CrosshairManager").GetComponent<CrosshairController>();
     }
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -20,6 +24,8 @@ public class MedFireVFXBehaviour : StateMachineBehaviour
         if (weapon != null) weapon.CurrentAmmo -= weapon.MediumAmmoCost; //Update Ammo during Fire State only
         if (weapon != null) weapon.FireRaycast(); //Fire Raycast (Only for Medium and Heavy)
         weapon.UpdateHUD();
+
+        //crosshairController.Expand(0.75f, 20f);
 
         if (weapon != null && weapon.MedBeamVFXFire != null && weapon.MedBeamSpawnPoint != null)
         {
@@ -55,7 +61,14 @@ public class MedFireVFXBehaviour : StateMachineBehaviour
             //     weapon.fovCoroutine = weapon.StartCoroutine(weapon.ChangeFOV(weapon.defaultFOV));
             // }
             Object.Destroy(beam.gameObject, BeamLifetime);
+
+            specialBarHUD.AddCharge(specialBarHUD.MediumRechargeAmount);
         }
+    }
+
+    public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        crosshairController.Collapse(1f);
     }
 }
 

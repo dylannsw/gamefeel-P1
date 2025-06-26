@@ -6,10 +6,12 @@ public class HeavyFireVFXBehaviour : StateMachineBehaviour
 {
     public float BeamLifetime = 10f;
     public Transform gun;
+    public CrosshairController crosshairController;
 
     private void Awake()
     {
         gun = GameObject.Find("Gun").transform;
+        crosshairController = GameObject.Find("CrosshairManager").GetComponent<CrosshairController>();
     }
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -74,6 +76,10 @@ public class HeavyFireVFXBehaviour : StateMachineBehaviour
                 weapon.Player.SmoothRestoreSensitivity(weapon.Player.DefaultSensitivity, 1.5f)
             );
         }
+
+        //Collapse Crosshair
+        crosshairController.Collapse(2f);
+        crosshairController.ResetRotation(0.5f);
     }
 }
 
