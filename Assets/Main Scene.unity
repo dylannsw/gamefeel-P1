@@ -113221,7 +113221,7 @@ MonoBehaviour:
   FPSRig: {fileID: 581508149200876127}
   PlayerCamera: {fileID: 3880966357540614692}
   DefaultSensitivity: 10
-  Sensitivity: 25
+  Sensitivity: 10
   HealthBarHUD: {fileID: 1510755241}
   HealthBarFill: {fileID: 809935517}
   PauseMenu: {fileID: 348899450}
