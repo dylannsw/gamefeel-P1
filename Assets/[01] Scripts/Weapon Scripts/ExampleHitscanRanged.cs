@@ -88,6 +88,7 @@ public class ExampleHitscanRanged : Weapon
     public Image AmmoFill;
     public TextMeshProUGUI AmmoText;
     public CrosshairController crosshairController;
+    public HUDManager hUDManager;
 
     private void Awake()
     {
@@ -199,10 +200,13 @@ public class ExampleHitscanRanged : Weapon
                         enemy.ReceiveDamage(AttackType.Light, LightAttackDamage);
                         specialBarHUD.AddCharge(specialBarHUD.lightRechargeAmount);
                     }
-
-                    //Crosshair pusle for light attacks
-                    crosshairController.Pulse(5f, 0.1f, 0.1f);
                 }
+
+                //Crosshair pusle for light attacks
+                crosshairController.Pulse(5f, 0.1f, 0.1f);
+
+                //Pulse HUD
+                hUDManager.PulseHUD(1.01f, 0.1f, 0.1f);
 
                 if (cameraRecoil != null) cameraRecoil.FireRecoil(CameraRecoil.RecoilStrength.Light);
 
@@ -352,16 +356,21 @@ public class ExampleHitscanRanged : Weapon
         {
             if (effect != null)
             {
-                if (CurrentAttack == AttackType.Medium) SpawnMultipleVFX(hit.point, Quaternion.LookRotation(hit.normal), effect, MediumHitEffectCount, MediumSphereRange);
-                else if (CurrentAttack == AttackType.Heavy) SpawnMultipleVFX(hit.point, Quaternion.LookRotation(hit.normal), effect, HeavyHitEffectCount, HeavySphereRange);
+                if (CurrentAttack == AttackType.Medium)
+                {
+                    SpawnMultipleVFX(hit.point, Quaternion.LookRotation(hit.normal), effect, MediumHitEffectCount, MediumSphereRange);
+                }
+                else if (CurrentAttack == AttackType.Heavy)
+                {
+                    SpawnMultipleVFX(hit.point, Quaternion.LookRotation(hit.normal), effect, HeavyHitEffectCount, HeavySphereRange);
+                }
             }
 
             var enemy = hit.collider.GetComponent<EnemyController>();
             if (enemy != null)
                 enemy.ReceiveDamage(CurrentAttack, damage);
+                crosshairController.ShowHitMarker();
         }
-
-        //CurrentAmmo -= GetAmmoCost(CurrentAttack);
         UpdateHUD();
     }
 

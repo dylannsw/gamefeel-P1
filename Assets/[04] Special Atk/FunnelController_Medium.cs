@@ -48,6 +48,7 @@ public class FunnelController_Medium : MonoBehaviour
     {
         // Move to fire position
         yield return StartCoroutine(MoveToPoint(firePos));
+        AudioManager.Instance.Play("FUNNEL");
 
         // Rotate to face target
         yield return StartCoroutine(FaceTarget());

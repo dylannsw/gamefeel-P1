@@ -8,12 +8,15 @@ public class MedFireVFXBehaviour : StateMachineBehaviour
     public Transform gun;
     public SpecialBarManager specialBarHUD;
     public CrosshairController crosshairController;
+    public HUDManager hUDManager;
+
 
     private void Awake()
     {
         gun = GameObject.Find("Gun").transform;
         specialBarHUD = GameObject.Find("SpecialBarManager").GetComponent<SpecialBarManager>();
         crosshairController = GameObject.Find("CrosshairManager").GetComponent<CrosshairController>();
+        hUDManager = GameObject.Find("HUDManager").GetComponent<HUDManager>();
     }
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -25,7 +28,7 @@ public class MedFireVFXBehaviour : StateMachineBehaviour
         if (weapon != null) weapon.FireRaycast(); //Fire Raycast (Only for Medium and Heavy)
         weapon.UpdateHUD();
 
-        //crosshairController.Expand(0.75f, 20f);
+        hUDManager.PulseHUD(1.1f, 0.1f, 0.3f);
 
         if (weapon != null && weapon.MedBeamVFXFire != null && weapon.MedBeamSpawnPoint != null)
         {

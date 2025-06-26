@@ -51,6 +51,7 @@ public class FunnelController_Heavy : MonoBehaviour
         // Regular travel path
         foreach (Transform point in travelPoints)
         {
+            AudioManager.Instance.Play("FUNNEL");
             yield return StartCoroutine(MoveToPoint(point));
             yield return StartCoroutine(FaceTargetAndFire());
             yield return new WaitForSeconds(waitTime);
@@ -95,6 +96,8 @@ public class FunnelController_Heavy : MonoBehaviour
     {
         if (finalChargeVFXPrefab != null && firePoint != null)
         {
+            AudioManager.Instance.Play("HEAVYSPECIAL");
+            
             GameObject charge = Instantiate(finalChargeVFXPrefab, firePoint.position, firePoint.rotation, firePoint);
             yield return new WaitForSeconds(finalChargeDuration);
             Destroy(charge);
@@ -107,6 +110,7 @@ public class FunnelController_Heavy : MonoBehaviour
 
     private IEnumerator MoveToPoint(Transform point)
     {
+        AudioManager.Instance.Play("FUNNEL");
         while (Vector3.Distance(transform.position, point.position) > 0.1f)
         {
             transform.position = Vector3.MoveTowards(transform.position, point.position, moveSpeed * Time.deltaTime);
@@ -155,6 +159,8 @@ public class FunnelController_Heavy : MonoBehaviour
             Destroy(vfx, 2f);
         }
 
+        AudioManager.Instance.PlayRandomFromGroup("HEAVYSPECIAL");
+
         RaycastHit hit;
         if (Physics.Raycast(firePoint.position, firePoint.forward, out hit, range))
         {
@@ -196,7 +202,7 @@ public class FunnelController_Heavy : MonoBehaviour
                 {
                     GameObject vfx = Instantiate(finalHitVFXPrefabs[Random.Range(0, finalHitVFXPrefabs.Length)], hit.point, Quaternion.LookRotation(hit.normal));
                     Destroy(vfx, 2.5f);
-                }   
+                }
             }
 
             Debug.DrawRay(firePoint.position, firePoint.forward * range, Color.red, 0.5f);

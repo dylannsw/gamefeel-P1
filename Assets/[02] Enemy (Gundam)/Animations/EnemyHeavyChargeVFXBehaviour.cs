@@ -12,6 +12,7 @@ public class EnemyHeavyChargeVFXBehaviour : StateMachineBehaviour
         EnemyController enemy = animator.GetComponentInParent<EnemyController>();
 
         //weapon.cameraShake?.StartCoroutine(weapon.cameraShake.Shake(7f, 0.0075f));
+        AudioManager.Instance.Play("HEAVYENEMY");
 
         if (enemy != null && enemy.HeavyBeamVFXCharge != null && enemy.BeamSpawnPoint != null)
         {

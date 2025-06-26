@@ -48,6 +48,7 @@ public class FunnelController_Light : MonoBehaviour
     {
         // Move to fire position
         yield return StartCoroutine(MoveToPoint(firePos));
+        AudioManager.Instance.Play("FUNNEL");
 
         // Fire loop
         for (int i = 0; i < numberOfShots; i++)
@@ -114,6 +115,8 @@ public class FunnelController_Light : MonoBehaviour
 
             GameObject muzzleVFX = Instantiate(muzzleEffectPrefab, firePoint.position, firePoint.rotation);
             Destroy(muzzleVFX, 1f);
+
+            AudioManager.Instance.Play("LIGHT_RANGED 01");
         }
 
         RaycastHit hit;

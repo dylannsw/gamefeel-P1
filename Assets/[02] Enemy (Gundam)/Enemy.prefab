@@ -305,8 +305,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.8980392, g: 0.3137255, b: 0.3137255, a: 1}
+  m_Material: {fileID: 2100000, guid: c7febd738a5cb3f41b1fe6a09205ea60, type: 2}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -483,7 +483,7 @@ MonoBehaviour:
         m_MethodName: PlaySoundWithRandomPitch
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: c810c1b23acd6d849bead1c59e544800,
+          m_ObjectArgument: {fileID: 8300000, guid: f00989ac9815d334d916026bc6d43c14,
             type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
@@ -511,7 +511,7 @@ MonoBehaviour:
         m_MethodName: PlaySoundWithRandomPitch
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: 4d359857be5f85f4d928ee358a53267b,
+          m_ObjectArgument: {fileID: 8300000, guid: fb969b5797e61b9498813822e23c04bb,
             type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
@@ -539,7 +539,7 @@ MonoBehaviour:
         m_MethodName: PlaySoundWithRandomPitch
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: 4d359857be5f85f4d928ee358a53267b,
+          m_ObjectArgument: {fileID: 8300000, guid: f00989ac9815d334d916026bc6d43c14,
             type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
@@ -565,23 +565,11 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 603580181203026098}
         m_TargetAssemblyTypeName: EnemyController, Assembly-CSharp
-        m_MethodName: PlaySoundWithRandomPitch
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: 0f2db511511b4064698a80a4bb3446fb,
-            type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Death
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 603580181203026098}
-        m_TargetAssemblyTypeName: EnemyController, Assembly-CSharp
         m_MethodName: 
         m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgument: {fileID: 8300000, guid: 953a85e4b34b4c84daf852e3641023a1,
+            type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -608,6 +596,8 @@ MonoBehaviour:
   TotalSegments: 10
   PitchVariation: 0.2
   Player: {fileID: 0}
+  cameraShake: {fileID: 0}
+  cameraRecoil: {fileID: 0}
 --- !u!82 &5028493976915225755
 AudioSource:
   m_ObjectHideFlags: 0
@@ -620,7 +610,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.727
+  m_Volume: 0.502
   m_Pitch: 1
   Loop: 0
   Mute: 0

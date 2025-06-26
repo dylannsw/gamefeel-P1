@@ -18,6 +18,7 @@ public class HeavyChargeVFXBehaviour : StateMachineBehaviour
 
         //Reduce Mouse Sensitivity
         weapon.Player.Sensitivity = weapon.attackSensitivity;
+        weapon.IsAttacking = true;
 
         weapon.cameraShake?.StartCoroutine(weapon.cameraShake.Shake(7f, 0.0075f));
 
@@ -33,5 +34,11 @@ public class HeavyChargeVFXBehaviour : StateMachineBehaviour
 
             weapon.HeavyBeanVFXHold = chargeVFX;
         }
+    }
+
+    public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        ExampleHitscanRanged weapon = animator.GetComponentInParent<ExampleHitscanRanged>();
+        weapon.IsAttacking = true;
     }
 }

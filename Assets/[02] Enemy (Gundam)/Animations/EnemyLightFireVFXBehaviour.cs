@@ -5,17 +5,27 @@ using UnityEngine;
 public class EnemyLightFireVFXBehaviour : StateMachineBehaviour
 {
     public Transform gun;
+    public HUDManager hudManager;
 
     private void Awake()
     {
         gun = GameObject.Find("Gun").transform;
+        hudManager = GameObject.Find("HUDManager").GetComponent<HUDManager>();
     }
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         EnemyController enemy = animator.GetComponentInParent<EnemyController>();
 
-        //weapon.cameraShake?.StartCoroutine(weapon.cameraShake.Shake(0.5f, 0.005f));
+        enemy.cameraShake?.StartCoroutine(enemy.cameraShake.Shake(0.2f, 0.02f));
+        enemy.cameraRecoil.FireRecoil(CameraRecoil.RecoilStrength.Medium);
+        hudManager.TriggerVignetteFlash(Color.red, 0.3f, 0.3f);
+        hudManager.TriggerFlash();
+        hudManager.PulseHUD(1.05f, 0.1f, 0.3f);
+
+        AudioManager.Instance.Play("LIGHT_RANGED 01");
+
+        enemy.Player.TakeDamage(enemy.LightAttackDamage, AttackType.Light);
 
         if (enemy != null && enemy.LightBeamVFXFire != null && enemy.BeamSpawnPoint != null)
         {

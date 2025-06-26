@@ -21,16 +21,45 @@ public class SpecialBarManager : MonoBehaviour
     public float lightRechargeAmount = 5f;
     public float MediumRechargeAmount = 15f;
     public float HeavyRechargeAmount = 30f;
+    private float previousCharge = 0f;
+
+    public Image threshold1;
+    public Image threshold2;
 
     private void Start()
     {
         EmptyCharge();
+        if (threshold1 != null) threshold1.gameObject.SetActive(false);
+        if (threshold2 != null) threshold2.gameObject.SetActive(false);
 
     }
 
-    public void AddCharge(float amount)
+    private void Update()
     {
-        currentCharge = Mathf.Clamp(currentCharge + amount, 0f, maxCharge);
+        if (currentCharge >= lightCost) threshold1.gameObject.SetActive(true);
+        else threshold1.gameObject.SetActive(false);
+        if (currentCharge >= mediumCost) threshold2.gameObject.SetActive(true);
+        else threshold2.gameObject.SetActive(false);
+    }
+
+public void AddCharge(float amount)
+{
+    float newCharge = Mathf.Clamp(currentCharge + amount, 0f, maxCharge);
+
+    // Check if medium threshold was just crossed
+    if (previousCharge < mediumCost && newCharge >= mediumCost)
+    {
+        AudioManager.Instance.Play("THRESHOLD");
+    }
+
+    // Check if heavy threshold was just crossed
+    if (previousCharge < lightCost && newCharge >= lightCost)
+    {
+        AudioManager.Instance.Play("THRESHOLD");
+    }
+
+        previousCharge = newCharge;
+        currentCharge = newCharge;
         UpdateSpecialHUD();
     }
 

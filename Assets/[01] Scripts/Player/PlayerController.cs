@@ -33,6 +33,8 @@ public class PlayerController : MonoBehaviour
     public TextMeshProUGUI HealthText;
     private bool[] segmentBroken;
     public HUDManager hUDManager;
+    public GameObject AmmoBarHUD;
+    public GameObject SpecialBarHUD;
 
     [Header("Player Health Bar HUD")]
     public Animator[] SegmentAnimators;
@@ -48,6 +50,8 @@ public class PlayerController : MonoBehaviour
     public UnityEvent OnDeath;
     public Weapon CurrentWeapon;
     public List<GameObject> WeaponList = new List<GameObject>();
+    public ParticleSystem reloadVFX;
+    public ExampleHitscanRanged weapon;
 
     [Header("Special Attack")]
     public Camera3D camera3D;
@@ -56,7 +60,16 @@ public class PlayerController : MonoBehaviour
     public UnityEvent OnLightSpecialActivated;
     public FunnelManager funnelManager;
     public SpecialBarManager specialBarHUD;
-    
+
+    [Header("Special Attack Animation Intros")]
+    public UnityEvent OnLightSpecialIntro;
+    public UnityEvent OnMediumSpecialIntro;
+    public UnityEvent OnHeavySpecialIntro;
+
+    [Header("Death UI")]
+    public GameOverHandler gameOverHandler;
+    private bool isDead = false;
+
     [HideInInspector]
     public PlayerControls.BasicActions Controls;
     private CharacterController CC;
@@ -64,8 +77,9 @@ public class PlayerController : MonoBehaviour
     float xRotation;
     float _Gravity;
     bool GamePaused;
-
     public float PitchVariation = 0.2f;
+
+
 
     private void Awake()
     {
@@ -88,6 +102,8 @@ public class PlayerController : MonoBehaviour
         _lastSegmentCount = TotalSegments;
         segmentBroken = new bool[TotalSegments];
         for (int i = 0; i < TotalSegments; i++) segmentBroken[i] = false;
+
+        PauseMenu.SetActive(false);
 
         UpdateHUD();
     }
@@ -127,34 +143,78 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //GroundedCheck(); //Removed gorund check, no longer needed
-        GetInventoryInput();
+        //GetInventoryInput();
         if (Keyboard.current.hKey.wasPressedThisFrame) Heal(40);
 
-        if (Input.GetKeyDown(KeyCode.Minus))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            if (!funnelManager.FunnelAttackState() && specialBarHUD.CanUseLight())
+            if (funnelManager.FunnelAttackState())
+            {
+                //Player is already in a funnel attack, show "Ongoing Attack" warning
+                hUDManager.ShowSpecialBarWarning(AttackType.None);
+                AudioManager.Instance.Play("UI_ERROR");
+            }
+            else if (!specialBarHUD.CanUseLight())
+            {
+                //Player is not in a funnel attack, but does not have enough charge
+                hUDManager.ShowSpecialBarWarning(AttackType.Light);
+                AudioManager.Instance.Play("UI_ERROR");
+            }
+            else
             {
                 TriggerLightSpecial();
                 specialBarHUD.SpendCharge(specialBarHUD.lightCost);
             }
         }
-        
-        if (Input.GetKeyDown(KeyCode.Equals))
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            if (!funnelManager.FunnelAttackState() && specialBarHUD.CanUseHeavy())
+            if (funnelManager.FunnelAttackState())
             {
-                TriggerHeavySpecial();
-                specialBarHUD.SpendCharge(specialBarHUD.heavyCost);
+                //Player is already in a funnel attack, show "Ongoing Attack" warning
+                hUDManager.ShowSpecialBarWarning(AttackType.None);
+                AudioManager.Instance.Play("UI_ERROR");
             }
-        }
-        if (Input.GetKeyDown(KeyCode.End))
-        {
-            if (!funnelManager.FunnelAttackState() && specialBarHUD.CanUseMedium())
+            else if (!specialBarHUD.CanUseMedium())
+            {
+                //Player is not in a funnel attack, but does not have enough charge
+                hUDManager.ShowSpecialBarWarning(AttackType.Medium);
+                AudioManager.Instance.Play("UI_ERROR");
+            }
+            else if (weapon.CurrentAmmo <= weapon.MediumAmmoCost)
+            {
+                hUDManager.ShowSpecialBarWarning(AttackType.None);
+                AudioManager.Instance.Play("UI_ERROR");
+                weapon.PerformReload();
+            }
+            else
             {
                 TriggerMediumSpecial();
                 specialBarHUD.SpendCharge(specialBarHUD.mediumCost);
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            if (funnelManager.FunnelAttackState())
+            {
+                //Player is already in a funnel attack, show "Ongoing Attack" warning
+                hUDManager.ShowSpecialBarWarning(AttackType.None);
+                AudioManager.Instance.Play("UI_ERROR");
+            }
+            else if (!specialBarHUD.CanUseHeavy())
+            {
+                //Player is not in a funnel attack, but does not have enough charge
+                hUDManager.ShowSpecialBarWarning(AttackType.Heavy);
+                AudioManager.Instance.Play("UI_ERROR");
+            }
+            else
+            {
+                TriggerHeavySpecial();
+                specialBarHUD.SpendCharge(specialBarHUD.heavyCost);
+            }
+        }
+
     }
 
     private void EquipWeapon(GameObject weapon)
@@ -188,29 +248,34 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public int GetPressedNumber()
-    {
-        //Helper function-- if the keycode's ToString returns a number, return it.
-        for (int number = 0; number <= 9; number++)
-        {
-            if (Input.GetKeyDown(number.ToString()))
-                return number;
-        }
-        return -1;
-    }
+    // public int GetPressedNumber()
+    // {
+    //     //Helper function-- if the keycode's ToString returns a number, return it.
+    //     for (int number = 0; number <= 9; number++)
+    //     {
+    //         if (Input.GetKeyDown(number.ToString()))
+    //             return number;
+    //     }
+    //     return -1;
+    // }
 
-    private void GetInventoryInput()
-    {
-        //If the player presses a number, attempt to equip a weapon at that inventory slot
-        if (GetPressedNumber() > -1 && !CurrentWeapon.IsAttacking)
-            try { EquipWeapon(WeaponList[GetPressedNumber() - 1]); }
-            catch { Debug.Log("No weapon at index " + (GetPressedNumber() - 1).ToString()); return; }
-    }
+    // private void GetInventoryInput()
+    // {
+    //     //If the player presses a number, attempt to equip a weapon at that inventory slot
+    //     if (GetPressedNumber() > -1 && !CurrentWeapon.IsAttacking)
+    //         try { EquipWeapon(WeaponList[GetPressedNumber() - 1]); }
+    //         catch { Debug.Log("No weapon at index " + (GetPressedNumber() - 1).ToString()); return; }
+    // }
 
     public void TogglePause()
     {
+        AudioManager.Instance.Play("UI_TOGGLE");
         GamePaused = !GamePaused;
         PauseMenu.SetActive(GamePaused);
+        HealthBarHUD.SetActive(!GamePaused);
+        AmmoBarHUD.SetActive(!GamePaused);
+        SpecialBarHUD.SetActive(!GamePaused);
+
         if (GamePaused)
             Cursor.lockState = CursorLockMode.None;
         else
@@ -299,17 +364,24 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(int damage, AttackType strength)
     {
+        if (isDead) return;
+
         CurrentHP -= damage;
         CurrentHP = Mathf.Clamp(CurrentHP, 0, MaxHP);
 
-        hUDManager.TriggerFlash(); //Trigger HUD Damage Flash
-        
+        // hUDManager.TriggerFlash(); //Trigger HUD Damage Flash
+
         UpdateHUD();
 
         if (CurrentHP <= 0)
         {
+            Velocity = Vector3.zero;
             PC.Disable();
             OnDeath?.Invoke();
+            HealthBarHUD.SetActive(false);
+            AmmoBarHUD.SetActive(false);
+            SpecialBarHUD.SetActive(false);
+            gameOverHandler.TriggerGameOver(); // fade screen and show UI
             specialBarHUD.EmptyCharge();
             return;
         }
@@ -389,23 +461,56 @@ public class PlayerController : MonoBehaviour
 
     public void TriggerHeavySpecial()
     {
+        StartCoroutine(DelayedHeavySpecial());
+    }
+
+    private IEnumerator DelayedHeavySpecial()
+    {
+        OnHeavySpecialIntro?.Invoke();
+        AudioManager.Instance.Play("SPECIALACTIVATION");
+        yield return new WaitForSeconds(1.05f);
+
         if (camera3D != null) camera3D.PlayCinematic();
+        AudioManager.Instance.Play("GUNDAM ACTIVATION");
         OnHeavySpecialActivated?.Invoke();
         funnelManager.funnelMode = 1;
         funnelManager.OnFunnelAttackStart();
     }
     public void TriggerMediumSpecial()
     {
+        StartCoroutine(DelayedMediumSpecial());
+    }
+
+    private IEnumerator DelayedMediumSpecial()
+    {
+        OnMediumSpecialIntro?.Invoke();
+        AudioManager.Instance.Play("SPECIALACTIVATION");
+        yield return new WaitForSeconds(1.05f);
+
         if (camera3D != null) camera3D.PlayCinematic();
+        AudioManager.Instance.Play("GUNDAM ACTIVATION");
         OnMediumSpecialActivated?.Invoke();
         funnelManager.funnelMode = 2;
         funnelManager.OnFunnelAttackStart();
     }
+
     public void TriggerLightSpecial()
     {
+        StartCoroutine(DelayedLightSpecial());
+    }
+
+    private IEnumerator DelayedLightSpecial()
+    {
+        OnLightSpecialIntro?.Invoke();
+        AudioManager.Instance.Play("SPECIALACTIVATION");
+
+        yield return new WaitForSeconds(1.05f);
+
         if (camera3D != null) camera3D.PlayCinematic();
+        AudioManager.Instance.Play("GUNDAM ACTIVATION");
         OnLightSpecialActivated?.Invoke();
         funnelManager.funnelMode = 3;
         funnelManager.OnFunnelAttackStart();
     }
+
 }

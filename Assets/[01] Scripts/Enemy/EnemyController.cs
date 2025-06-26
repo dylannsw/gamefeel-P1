@@ -24,6 +24,7 @@ public class EnemyController : MonoBehaviour
     public int LightAttackDamage = 1;
     public int MediumAttackDamage = 2;
     public int HeavyAttackDamage = 3;
+    public float heavyBeamTickRate = 0.2f;
 
     [Header("Object References")]
     public Animator EnemyAnimator;
@@ -68,6 +69,9 @@ public class EnemyController : MonoBehaviour
     private EnemyControls.BasicActions Controls;
     public float PitchVariation = 0.05f;
     public PlayerController Player;
+    public CameraShake cameraShake;
+    public CameraRecoil cameraRecoil;
+    private Coroutine heavyBeamTickCoroutine;
 
     private void Awake()
     {
@@ -116,27 +120,27 @@ public class EnemyController : MonoBehaviour
     private void PerformLightAttack()
     {
         OnAttackLight?.Invoke();
-        Player.TakeDamage(LightAttackDamage, AttackType.Light);
+        //Player.TakeDamage(LightAttackDamage, AttackType.Light);
     }
 
     private void PerformMediumAttack()
     {
         OnAttackMedium?.Invoke();
-        Player.TakeDamage(MediumAttackDamage, AttackType.Medium);
+        //Player.TakeDamage(MediumAttackDamage, AttackType.Medium);
 
     }
 
     private void PerformHeavyAttack()
     {
         OnAttackHeavy?.Invoke();
-        Player.TakeDamage(HeavyAttackDamage, AttackType.Heavy);
+        //Player.TakeDamage(HeavyAttackDamage, AttackType.Heavy);
     }
 
     public void ReceiveDamage(AttackType strength, float damage)
     {
         if (isDead) return;
 
-        StartCoroutine(FlashDamage());
+        //StartCoroutine(FlashDamage());
 
         CurrentHealth -= damage;
         UpdateHUD();
@@ -170,6 +174,7 @@ public class EnemyController : MonoBehaviour
         OnDeath?.Invoke();
         PlayDeathStartVFX();
         StartCoroutine(RespawnEnemy(5f));
+        AudioManager.Instance.Play("ENEMY_DEATH");
     }
 
     IEnumerator RespawnEnemy(float delay)
@@ -283,18 +288,18 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    //Enemy Damage Hit
-    private IEnumerator FlashDamage()
-    {
-        Renderer rend = GetComponentInChildren<Renderer>();
-        if (rend != null)
-        {
-            Color original = rend.material.color;
-            rend.material.color = Color.red;
-            yield return new WaitForSeconds(0.1f);
-            rend.material.color = original;
-        }
-    }
+    // Enemy Damage Hit
+    // private IEnumerator FlashDamage()
+    // {
+    //     Renderer rend = GetComponentInChildren<Renderer>();
+    //     if (rend != null)
+    //     {
+    //         Color original = rend.material.color;
+    //         rend.material.color = Color.red;
+    //         yield return new WaitForSeconds(0.1f);
+    //         rend.material.color = original;
+    //     }
+    // }
 
     public void PlayDeathStartVFX()
     {
@@ -311,6 +316,33 @@ public class EnemyController : MonoBehaviour
         {
             GameObject vfx = Instantiate(DeathEndVFX, DeathVFXSpawnPoint.position, Quaternion.identity);
             Destroy(vfx, 5f);
+        }
+    }
+    public void StartHeavyBeamTick()
+    {
+        if (heavyBeamTickCoroutine != null) return;
+        heavyBeamTickCoroutine = StartCoroutine(HeavyBeamTick());
+    }
+
+    public void StopHeavyBeamTick()
+    {
+        if (heavyBeamTickCoroutine != null)
+        {
+            StopCoroutine(heavyBeamTickCoroutine);
+            heavyBeamTickCoroutine = null;
+        }
+    }
+
+    private IEnumerator HeavyBeamTick()
+    {
+        while (true)
+        {
+            if (Player != null)
+            {
+                Player.TakeDamage(HeavyAttackDamage, AttackType.Heavy);
+            }
+
+            yield return new WaitForSeconds(heavyBeamTickRate);
         }
     }
 

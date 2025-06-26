@@ -7,11 +7,13 @@ public class HeavyFireVFXBehaviour : StateMachineBehaviour
     public float BeamLifetime = 10f;
     public Transform gun;
     public CrosshairController crosshairController;
+    public HUDManager hUDManager;
 
     private void Awake()
     {
         gun = GameObject.Find("Gun").transform;
         crosshairController = GameObject.Find("CrosshairManager").GetComponent<CrosshairController>();
+        hUDManager = GameObject.Find("HUDManager").GetComponent<HUDManager>();
     }
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -23,7 +25,9 @@ public class HeavyFireVFXBehaviour : StateMachineBehaviour
         if (weapon != null) weapon.FireRaycast(); //Fire Raycast (Only for Medium and Heavy)
         if (weapon != null) weapon.StartHeavyBeamTick(); //Start Beam Tick Coroutine
         weapon.UpdateHUD();
+        weapon.IsAttacking = true;
         
+        hUDManager.PulseHUD(1.25f, 0.1f, 5.5f);
 
         if (weapon != null && weapon.HeavyBeamVFXFire != null && weapon.HeavyBeamSpawnPoint != null)
         {
@@ -76,7 +80,7 @@ public class HeavyFireVFXBehaviour : StateMachineBehaviour
                 weapon.Player.SmoothRestoreSensitivity(weapon.Player.DefaultSensitivity, 1.5f)
             );
         }
-
+        
         //Collapse Crosshair
         crosshairController.Collapse(2f);
         crosshairController.ResetRotation(0.5f);
